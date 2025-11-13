@@ -205,12 +205,45 @@ function updateHPbars() {
 // FRUIT SPIN
 // =====================================================
 document.getElementById("rollFruitBtn").onclick = () => {
-    let total = fruits.reduce((acc, f) => acc + f.chance, 0);
+    
+    // 1. Pega o bônus de 'roll' do título atual do jogador
+    const titleObject = getCurrentTitleObject();
+    const rollBonus = titleObject.bonus.rollBonus || {}; // Pega o {legendary, mythic}
+    const legendaryBonus = rollBonus.legendary || 0;
+    const mythicBonus = rollBonus.mythic || 0;
+
+    // 2. Calcula o NOVO 'total' de chances, incluindo os bônus
+    let total = 0;
+    for (const f of fruits) {
+        total += f.chance; // Adiciona a chance base
+        if (f.rarity === 'Lendária') {
+            total += legendaryBonus; // Adiciona o bônus lendário ao total
+        }
+        if (f.rarity === 'Mítica') {
+            total += mythicBonus; // Adiciona o bônus mítico ao total
+        }
+    }
+
+    // 3. Sorteia o número aleatório com base no novo total
     let rand = Math.random() * total;
     let count = 0;
 
+    // 4. Loop para encontrar a fruta
     for (let f of fruits) {
-        count += f.chance;
+        // Pega a chance base da fruta
+        let currentChance = f.chance; 
+        
+        // Adiciona o bônus do título APENAS para esta fruta
+        if (f.rarity === 'Lendária') {
+            currentChance += legendaryBonus;
+        }
+        if (f.rarity === 'Mítica') {
+            currentChance += mythicBonus;
+        }
+
+        // Adiciona ao contador
+        count += currentChance; 
+
         if (rand <= count) {
             player.fruit = f;
 
@@ -224,6 +257,12 @@ document.getElementById("rollFruitBtn").onclick = () => {
             imgElement.style.display = "block"; // Mostra a imagem
 
             log(`🍏 Você ganhou a fruta ${f.name}!`);
+            
+            // Log especial se o bônus ajudou!
+            if (currentChance > f.chance) {
+                log(`👑 Seu Título aumentou suas chances!`);
+            }
+            
             document.getElementById("btnStart").disabled = false;
             return;
         }
@@ -482,14 +521,42 @@ function addXP(amount) {
 // BOUNTY
 // =====================================================
 const titles = [
-    // Bônus: +HP, +Ataque, +Defesa, +XP
-    { limit: 5_000_000_000, title: 'Rei dos Piratas', bonus: { hp: 1000, atk: 250, def: 100, xp: 0.20 } }, // +20% XP
-    { limit: 3_000_000_000, title: 'Yonkou', bonus: { hp: 500, atk: 150, def: 75, xp: 0.15 } }, // +15% XP
-    { limit: 2_000_000_000, title: 'Comandante de Yonkou', bonus: { hp: 300, atk: 100, def: 50, xp: 0.10 } }, // +10% XP
-    { limit: 1_000_000_000, title: 'Shichibukai', bonus: { hp: 200, atk: 70, def: 35, xp: 0.08 } }, // +8% XP
-    { limit: 300_000_000, title: 'Supernova', bonus: { hp: 100, atk: 40, def: 20, xp: 0.05 } }, // +5% XP
-    { limit: 100_000_000, title: 'Pirata', bonus: { hp: 50, atk: 15, def: 5, xp: 0.02 } }, // +2% XP
-    { limit: 0, title: 'Marujo', bonus: { hp: 0, atk: 0, def: 0, xp: 0.0 } } // 0% XP
+    // Bônus: hp, atk, def, xp, e agora rollBonus (chance extra)
+    { 
+        limit: 5_000_000_000, 
+        title: 'Rei dos Piratas', 
+        bonus: { hp: 1000, atk: 250, def: 100, xp: 0.20, rollBonus: { legendary: 15, mythic: 8 } } 
+    },
+    { 
+        limit: 3_000_000_000, 
+        title: 'Yonkou', 
+        bonus: { hp: 500, atk: 150, def: 75, xp: 0.15, rollBonus: { legendary: 10, mythic: 5 } } 
+    },
+    { 
+        limit: 2_000_000_000, 
+        title: 'Comandante de Yonkou', 
+        bonus: { hp: 300, atk: 100, def: 50, xp: 0.10, rollBonus: { legendary: 5, mythic: 2 } } 
+    },
+    { 
+        limit: 1_000_000_000, 
+        title: 'Shichibukai', 
+        bonus: { hp: 200, atk: 70, def: 35, xp: 0.08, rollBonus: { legendary: 2, mythic: 1 } } 
+    },
+    { 
+        limit: 300_000_000, 
+        title: 'Supernova', 
+        bonus: { hp: 100, atk: 40, def: 20, xp: 0.05, rollBonus: { legendary: 1, mythic: 0 } } 
+    },
+    { 
+        limit: 100_000_000, 
+        title: 'Pirata', 
+        bonus: { hp: 50, atk: 15, def: 5, xp: 0.02, rollBonus: { legendary: 0, mythic: 0 } } // Sem bônus
+    },
+    { 
+        limit: 0, 
+        title: 'Marujo', 
+        bonus: { hp: 0, atk: 0, def: 0, xp: 0.0, rollBonus: { legendary: 0, mythic: 0 } } // Sem bônus
+    }
 ];
 
 function addBounty(amount) {
