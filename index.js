@@ -188,8 +188,8 @@ const weapons = [
 // =====================================================
 const missions = [
     // --- SEU EAST BLUE & ALABASTA (Intacto) ---
-    { levelMin: 1,    name: "Derrote 2 Marinheiros Novatos", quantity: 2, baseHP: 80, baseAtk: 8, baseDef: 3, reward: 10_000_000, xp: 500, hakiChance: 0.01 },
-    { levelMin: 10,   name: "Derrote 5 Marinheiros", quantity: 5, baseHP: 120, baseAtk: 12, baseDef: 5, reward: 25_000_000, xp: 1000, hakiChance: 0.03 },
+    { levelMin: 1,    name: "Derrote 2 Marinheiros Novatos", quantity: 2, baseHP: 80, baseAtk: 8, baseDef: 3, reward: 10_000_000, xp: 700, hakiChance: 0.01 },
+    { levelMin: 10,   name: "Derrote 5 Marinheiros", quantity: 5, baseHP: 120, baseAtk: 12, baseDef: 5, reward: 25_000_000, xp: 1500, hakiChance: 0.03 },
     { levelMin: 25,   name: "Derrote os piratas do Buggy", baseHP: 250, baseAtk: 16, baseDef: 8, reward: 100_000_000, xp: 3500, hakiChance: 0.05 },
     { levelMin: 40,   name: "Derrote o Buggy", quantity: 3, baseHP: 500, baseAtk: 20, baseDef: 10, reward: 250_000_000, xp: 5000, hakiChance: 0.08 },
     { levelMin: 60,   name: "Derrote o Don Krieg", baseHP: 1000, baseAtk: 26, baseDef: 13, reward: 1_000_000_000, xp: 8000, hakiChance: 0.15 },
