@@ -667,7 +667,7 @@ function addXP(amount) {
         
         player.xp -= player.nextXP;
         player.level++;
-        player.nextXP = Math.floor(player.nextXP * 1.3);
+        player.nextXP = Math.floor(player.nextXP + 50);
 
         // Soma os stats totais
         totalHpGained += hpGain;
