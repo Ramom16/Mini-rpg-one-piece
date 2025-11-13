@@ -23,10 +23,10 @@ let currentEnemy = null;
 // =====================================================
 const fruits = [
     { name: 'Bomu Bomu no Mi', rarity: 'Comum', chance: 60, special: 'Explosão', damage: 1.1 },
-    { name: 'Mera Mera no Mi', rarity: 'Rara', chance: 25, special: 'Chama Flamejante', damage: 2 },
-    { name: 'Goro Goro no Mi', rarity: 'Épica', chance: 10, special: 'Relâmpago Divino', damage: 5 },
-    { name: 'Gura Gura no Mi', rarity: 'Lendária', chance: 4, special: 'Abalo Sísmico', damage: 10 },
-    { name: 'Pika Pika no Mi', rarity: 'Lendária', chance: 4, special: 'Chute de luz', damage: 15 },
+    { name: 'Mera Mera no Mi', rarity: 'Rara', chance: 30, special: 'Chama Flamejante', damage: 2 },
+    { name: 'Goro Goro no Mi', rarity: 'Épica', chance: 15, special: 'Relâmpago Divino', damage: 5 },
+    { name: 'Gura Gura no Mi', rarity: 'Lendária', chance: 9, special: 'Abalo Sísmico', damage: 10 },
+    { name: 'Pika Pika no Mi', rarity: 'Lendária', chance: 9, special: 'Chute de luz', damage: 15 },
     { name: 'Hito Hito no Mi', rarity: 'Mítica', chance: 1, special: 'Golpe da Liberdade', damage: 40 },
     { name: 'Uo Uo no Mi', rarity: 'Mítica', chance: 1, special: 'Onigashima', damage: 25 }
 ];
@@ -37,14 +37,14 @@ const fruits = [
 const missions = [
     { name: "Derrote 2 Marinheiros Novatos", quantity: 2, baseHP: 80, baseAtk: 8, baseDef: 3, reward: 10_000_000, xp: 100, hakiChance: 0.01 },
     { name: "Derrote 5 Marinheiros", quantity: 5, baseHP: 120, baseAtk: 12, baseDef: 5, reward: 25_000_000, xp: 200, hakiChance: 0.03 },
-    { name: "Derrote o Capitão da Marinha", baseHP: 160, baseAtk: 16, baseDef: 8, reward: 100_000_000, xp: 350, hakiChance: 0.05 },
-    { name: "Derrote o Vice-Almirante", baseHP: 200, baseAtk: 20, baseDef: 10, reward: 250_000_000, xp: 500, hakiChance: 0.08 },
-    { name: "Derrote o Almirante", baseHP: 260, baseAtk: 26, baseDef: 13, reward: 1_000_000_000, xp: 800, hakiChance: 0.10 },
-    { name: "Derrote 2 Almirantes", quantity: 2, baseHP: 350, baseAtk: 40, baseDef: 20, reward: 1_800_000_000, xp: 1200, hakiChance: 0.12 },
-    { name: "Derrote o Gorosei", baseHP: 500, baseAtk: 60, baseDef: 35, reward: 3_000_000_000, xp: 2000, hakiChance: 0.15 },
-    { name: "Derrote Imu", baseHP: 700, baseAtk: 90, baseDef: 50, reward: 5_000_000_000, xp: 3500, hakiChance: 0.20 },
-    { name: "Derrote os 5 Gorosei", quantity: 5, baseHP: 900, baseAtk: 120, baseDef: 80, reward: 10_000_000_000, xp: 5000, hakiChance: 0.25 },
-    { name: "Derrote os Almirantes + Gorosei", quantity: 8, baseHP: 1200, baseAtk: 160, baseDef: 100, reward: 20_000_000_000, xp: 8000, hakiChance: 0.30 }
+    { name: "Derrote o Capitão da Marinha", baseHP: 250, baseAtk: 16, baseDef: 8, reward: 100_000_000, xp: 350, hakiChance: 0.05 },
+    { name: "Derrote o Vice-Almirante", baseHP: 500, baseAtk: 20, baseDef: 10, reward: 250_000_000, xp: 500, hakiChance: 0.08 },
+    { name: "Derrote o Almirante", baseHP: 800, baseAtk: 26, baseDef: 13, reward: 1_000_000_000, xp: 800, hakiChance: 0.15 },
+    { name: "Derrote 2 Almirantes", quantity: 2, baseHP: 800, baseAtk: 40, baseDef: 20, reward: 1_800_000_000, xp: 1200, hakiChance: 0.30 },
+    { name: "Derrote o Gorosei", baseHP: 1000, baseAtk: 60, baseDef: 35, reward: 3_000_000_000, xp: 2000, hakiChance: 0.50 },
+    { name: "Derrote Imu", baseHP: 2000, baseAtk: 90, baseDef: 50, reward: 5_000_000_000, xp: 3500, hakiChance: 0.70 },
+    { name: "Derrote os 5 Gorosei", quantity: 5, baseHP: 1000, baseAtk: 120, baseDef: 80, reward: 10_000_000_000, xp: 5000, hakiChance: 1 },
+    { name: "Derrote os Almirantes + Gorosei", quantity: 8, baseHP: 1200, baseAtk: 160, baseDef: 100, reward: 20_000_000_000, xp: 8000, hakiChance: 1.5 }
 ];
 
 // =====================================================
@@ -66,12 +66,40 @@ function updateStats() {
     document.getElementById("inventory").innerText =
         player.fruit ? player.fruit.name : "Nenhuma fruta equipada";
 }
+// =====================================================
+// CALCULADORA DE STATUS (GETTERS)
+// =====================================================
+
+// Pega o objeto do título atual do jogador
+function getCurrentTitleObject() {
+    for (const t of titles) {
+        if (player.bounty >= t.limit) {
+            return t; // Retorna o primeiro (mais alto) que o jogador alcançou
+        }
+    }
+    return titles[titles.length - 1]; // Retorna Marujo se algo der errado
+}
+
+// Retorna o MaxHP total (Base + Bônus)
+function getPlayerTotalMaxHP() {
+    return player.maxHP + getCurrentTitleObject().bonus.hp;
+}
+
+// Retorna o Ataque total (Base + Bônus)
+function getPlayerTotalAtk() {
+    return player.atk + getCurrentTitleObject().bonus.atk;
+}
+
+// Retorna a Defesa total (Base + Bônus)
+function getPlayerTotalDef() {
+    return player.def + getCurrentTitleObject().bonus.def;
+}
 
 function updateHPbars() {
-    document.getElementById("playerHP").innerText = `HP: ${player.hp} / ${player.maxHP}`;
+    document.getElementById("playerHP").innerText = `\HP: ${player.hp} / ${getPlayerTotalMaxHP()}`;
     document.getElementById("enemyHP").innerText = `HP: ${currentEnemy.hp} / ${currentEnemy.maxHP}`;
 
-    document.getElementById("playerHPfill").style.width = `${(player.hp / player.maxHP) * 100}%`;
+    document.getElementById("playerHPfill").style.width = `\${(player.hp / getPlayerTotalMaxHP()) * 100}%`;
     document.getElementById("enemyHPfill").style.width = `${(currentEnemy.hp / currentEnemy.maxHP) * 100}%`;
 }
 
@@ -164,7 +192,7 @@ function startMission(i) {
 
     updateStats();
     updateHPbars();
-    player.hp = player.maxHP;
+    player.hp = getPlayerTotalMaxHP();
     updateHPbars();
     currentEnemy.count = m.quantity;
 }
@@ -175,7 +203,7 @@ function startMission(i) {
 document.getElementById("attackBtn").onclick = () => {
     if (!currentEnemy) return;
 
-    let dmg = Math.max(1, player.atk - currentEnemy.def);
+    let dmg = Math.max(1, getPlayerTotalAtk() - currentEnemy.def);
 
     if (player.haki) dmg *= 2;
 
@@ -191,7 +219,7 @@ document.getElementById("attackBtn").onclick = () => {
 document.getElementById("specialBtn").onclick = () => {
     if (!currentEnemy) return;
 
-    let dmg = player.atk * (player.fruit.damage || 1.3);
+    let dmg = getPlayerTotalAtk() * (player.fruit.damage || 1.3);
 
     if (player.haki) dmg *= 2;
 
@@ -208,7 +236,7 @@ document.getElementById("specialBtn").onclick = () => {
 document.getElementById("defendBtn").onclick = () => {
     if (!currentEnemy) return;
 
-    let dmg = Math.max(1, currentEnemy.atk - player.def * 1.5);
+    let dmg = Math.max(1, currentEnemy.atk - getPlayerTotalDef() * 1.5);
 
     player.hp -= dmg;
     log(`🛡 Você defendeu! Sofreu apenas ${dmg} de dano.`);
@@ -219,7 +247,7 @@ document.getElementById("defendBtn").onclick = () => {
 };
 
 function enemyTurn() {
-    let dmg = Math.max(1, currentEnemy.atk - player.def);
+    let dmg = Math.max(1, currentEnemy.atk - getPlayerTotalDef());
 
     if (player.haki) dmg *= 0.7;
 
@@ -290,7 +318,7 @@ function addXP(amount) {
         player.nextXP = Math.floor(player.nextXP * 1.5);
         player.maxHP = Math.floor(player.maxHP * 1.25);
         player.atk = Math.floor(player.atk * 1.20);
-        player.hp = player.maxHP;
+        player.hp = getPlayerTotalMaxHP();
 
         log(`⬆️ Você subiu para nível ${player.level}!`);
     }
@@ -300,13 +328,14 @@ function addXP(amount) {
 // BOUNTY
 // =====================================================
 const titles = [
-    { limit: 5_000_000_000, title: 'Rei dos Piratas' }, // O último título do seu array original
-    { limit: 3_000_000_000, title: 'Yonkou' }, // Ajustei o limite do Yonkou
-    { limit: 2_000_000_000, title: 'Comandante de Yonkou' },
-    { limit: 1_000_000_000, title: 'Shichibukai' },
-    { limit: 300_000_000, title: 'Supernova' },
-    { limit: 100_000_000, title: 'Pirata' },
-    { limit: 0, title: 'Marujo' } // Começa com 0
+    // Bônus: +HP, +Ataque, +Defesa
+    { limit: 5_000_000_000, title: 'Rei dos Piratas', bonus: { hp: 1000, atk: 250, def: 100 } },
+    { limit: 3_000_000_000, title: 'Yonkou', bonus: { hp: 500, atk: 150, def: 75 } },
+    { limit: 2_000_000_000, title: 'Comandante de Yonkou', bonus: { hp: 300, atk: 100, def: 50 } },
+    { limit: 1_000_000_000, title: 'Shichibukai', bonus: { hp: 200, atk: 70, def: 35 } },
+    { limit: 300_000_000, title: 'Supernova', bonus: { hp: 100, atk: 40, def: 20 } },
+    { limit: 100_000_000, title: 'Pirata', bonus: { hp: 50, atk: 15, def: 5 } },
+    { limit: 0, title: 'Marujo', bonus: { hp: 0, atk: 0, def: 0 } }
 ];
 
 function addBounty(amount) {
@@ -325,6 +354,7 @@ function addBounty(amount) {
     if (newTitle !== player.title) {
         player.title = newTitle;
         log(`👑 Seu título foi atualizado para ${player.title}!`);
+        player.hp = getPlayerTotalMaxHP();
     }
 
     log(`💰 Nova recompensa: ${player.bounty.toLocaleString()}`);
@@ -337,4 +367,57 @@ function addBounty(amount) {
 // =====================================================
 document.getElementById("resetBtn").onclick = () => {
     location.reload();
+};
+
+// =====================================================
+// SAVE / LOAD SYSTEM (LocalStorage)
+// =====================================================
+
+// Seleciona o botão de salvar
+document.getElementById("saveBtn").onclick = saveGame;
+
+// Tenta carregar o jogo assim que a página abre
+window.onload = loadGame; 
+
+function saveGame() {
+    // Converte o objeto 'player' em um texto JSON e salva
+    localStorage.setItem("onePieceRPG_playerSave", JSON.stringify(player));
+    log("💾 Jogo salvo!");
+}
+
+function loadGame() {
+    // Pega o texto salvo do localStorage
+    const savedData = localStorage.getItem("onePieceRPG_playerSave");
+
+    // Se existir um save...
+    if (savedData) {
+        // Converte o texto de volta para um objeto
+        const loadedPlayer = JSON.parse(savedData);
+        
+        // Atualiza o 'player' principal com os dados salvos
+        // Object.assign é uma forma segura de fundir os dois objetos
+        Object.assign(player, loadedPlayer); 
+
+        log("📂 Jogo carregado!");
+        
+        // Atualiza a UI para mostrar os dados carregados
+        document.getElementById("playerName").value = player.name;
+        document.getElementById("fruitResult").innerText = player.fruit ? 
+            `${player.fruit.name} (${player.fruit.rarity})` : "Nenhuma fruta girada";
+        
+        // Mostra o jogo e atualiza status/inventário
+        document.getElementById("gameArea").style.display = "block";
+        updateStats(); 
+        document.getElementById("btnStart").disabled = true; // Desabilita o "Iniciar" pois o jogo já começou
+    } else {
+        log("🏴‍☠️ Novo jogo. Gire uma fruta e digite seu nome.");
+    }
+}
+
+// Modifique seu botão de Reset para limpar o save
+document.getElementById("resetBtn").onclick = () => {
+    if (confirm("Tem certeza que quer apagar seu progresso?")) {
+        localStorage.removeItem("onePieceRPG_playerSave"); // Limpa o save
+        location.reload(); // Recarrega a página
+    }
 };
