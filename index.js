@@ -1,4 +1,4 @@
-alert("Update 1.8 - quanto maior o titulo, mais a chance da garantir uma fruta mitica ou lendaria e também foi estabilizado o ganho de level")
+alert("Update 1.9 - Nessa update, eu coloquei missões por sagas de east blue, grand line e até wano")
 
 // =====================================================
 // PLAYER DATA
@@ -127,21 +127,38 @@ const fruits = [
 // MISSIONS
 // =====================================================
 const missions = [
+    // --- SEU EAST BLUE & ALABASTA (Intacto) ---
     { levelMin: 1,    name: "Derrote 2 Marinheiros Novatos", quantity: 2, baseHP: 80, baseAtk: 8, baseDef: 3, reward: 10_000_000, xp: 500, hakiChance: 0.01 },
     { levelMin: 10,   name: "Derrote 5 Marinheiros", quantity: 5, baseHP: 120, baseAtk: 12, baseDef: 5, reward: 25_000_000, xp: 1000, hakiChance: 0.03 },
-    { levelMin: 25,   name: "Derrote o Capitão da Marinha", baseHP: 250, baseAtk: 16, baseDef: 8, reward: 100_000_000, xp: 3500, hakiChance: 0.05 },
-    { levelMin: 40,   name: "Derrote o Vice-Almirante", baseHP: 500, baseAtk: 20, baseDef: 10, reward: 250_000_000, xp: 5000, hakiChance: 0.08 },
-    { levelMin: 60,   name: "Derrote o Almirante", baseHP: 1000, baseAtk: 26, baseDef: 13, reward: 1_000_000_000, xp: 8000, hakiChance: 0.15 },
-    { levelMin: 80,   name: "Derrote 2 Almirantes", quantity: 2, baseHP: 1000, baseAtk: 40, baseDef: 20, reward: 1_800_000_000, xp: 12000, hakiChance: 0.30 },
-    { levelMin: 100,  name: "Derrote o Gorosei", baseHP: 1000, baseAtk: 60, baseDef: 35, reward: 3_000_000_000, xp: 20000, hakiChance: 0.50 },
-    { levelMin: 120,  name: "Derrote Imu", baseHP: 2000, baseAtk: 90, baseDef: 50, reward: 5_000_000_000, xp: 35000, hakiChance: 0.70 },
-    { levelMin: 150,  name: "Derrote os 5 Gorosei", quantity: 5, baseHP: 1000, baseAtk: 120, baseDef: 80, reward: 10_000_000_000, xp: 50000, hakiChance: 1 },
-    { levelMin: 200,  name: "Derrote os Almirantes + Gorosei", quantity: 8, baseHP: 2000, baseAtk: 160, baseDef: 100, reward: 20_000_000_000, xp: 80000, hakiChance: 1.5 },
-    { levelMin: 250,  name: "Derrote o Xebec", baseHP: 10000, baseAtk: 400, baseDef:100, reward: 30_000_000_000, xp:100000, hakiChance:10},
+    { levelMin: 25,   name: "Derrote os piratas do Buggy", baseHP: 250, baseAtk: 16, baseDef: 8, reward: 100_000_000, xp: 3500, hakiChance: 0.05 },
+    { levelMin: 40,   name: "Derrote o Buggy", quantity: 3, baseHP: 500, baseAtk: 20, baseDef: 10, reward: 250_000_000, xp: 5000, hakiChance: 0.08 },
+    { levelMin: 60,   name: "Derrote o Don Krieg", baseHP: 1000, baseAtk: 26, baseDef: 13, reward: 1_000_000_000, xp: 8000, hakiChance: 0.15 },
+    { levelMin: 80,   name: "Derrote os piratas de Arlong", quantity: 2, baseHP: 1000, baseAtk: 40, baseDef: 20, reward: 1_800_000_000, xp: 12000, hakiChance: 0.30 },
+    { levelMin: 100,  name: "Derrote o Wapol", baseHP: 1000, baseAtk: 60, baseDef: 35, reward: 3_000_000_000, xp: 20000, hakiChance: 0.50 },
+    { levelMin: 120,  name: "Derrote o Mr 3", baseHP: 2000, baseAtk: 90, baseDef: 50, reward: 5_000_000_000, xp: 35000, hakiChance: 0.70 },
+    { levelMin: 150,  name: "Derrote Mr 5 & Miss Valentine", quantity: 2, baseHP: 1000, baseAtk: 120, baseDef: 80, reward: 10_000_000_000, xp: 50000, hakiChance: 1 },
+    { levelMin: 200,  name: "Derrote Bellamy", baseHP: 2000, baseAtk: 160, baseDef: 100, reward: 20_000_000_000, xp: 80000, hakiChance: 1.5 },
+    { levelMin: 250,  name: "Derrote o Crocodile", baseHP: 10000, baseAtk: 400, baseDef:100, reward: 30_000_000_000, xp:100000, hakiChance:10},
     
-    // Para chegar no Nível 10000, você precisa adicionar mais missões
-    { levelMin: 500,  name: "Derrote o Exército de Elbaf", quantity: 10, baseHP: 50000, baseAtk: 1000, baseDef:500, reward: 50_000_000_000, xp:50000, hakiChance:20}
-    // ... e assim por diante
+    // --- NOVO: SAGA SKYPIEA & ENIES LOBBY ---
+    // (Preenchendo o buraco 250 -> 500)
+    { levelMin: 300,  name: "Derrote Enel", baseHP: 12000, baseAtk: 500, baseDef: 150, reward: 32_000_000_000, xp: 150000, hakiChance: 12 },
+    { levelMin: 350,  name: "Derrote Rob Lucci", baseHP: 20000, baseAtk: 650, baseDef: 250, reward: 35_000_000_000, xp: 250000, hakiChance: 15 },
+    
+    // --- NOVO: SAGA THRILLER BARK & NOVO MUNDO ---
+    { levelMin: 400,  name: "Derrote Oars e Moriah", quantity: 2, baseHP: 15000, baseAtk: 700, baseDef: 200, reward: 40_000_000_000, xp: 300000, hakiChance: 16 },
+    { levelMin: 450,  name: "Derrote 5 Pacifistas", quantity: 5, baseHP: 5000, baseAtk: 800, baseDef: 400, reward: 44_000_000_000, xp: 350000, hakiChance: 17 },
+    { levelMin: 500,  name: "Derrote Hody Jones", baseHP: 25000, baseAtk: 850, baseDef: 350, reward: 46_000_000_000, xp: 420000, hakiChance: 19 },
+    
+    // --- NOVO: SAGA DRESSROSA & WHOLE CAKE ---
+    { levelMin: 550,  name: "Derrote Doflamingo", baseHP: 40000, baseAtk: 950, baseDef: 450, reward: 49_000_000_000, xp: 490000, hakiChance: 20 },
+    { levelMin: 600,  name: "Derrote o Exército de Elbaf", quantity: 10, baseHP: 50000, baseAtk: 1000, baseDef:500, reward: 50_000_000_000, xp: 500000, hakiChance: 20}, // Sua missão, movida para um nível lógico
+    { levelMin: 700,  name: "Derrote Cracker", quantity: 10, baseHP: 8000, baseAtk: 1200, baseDef: 600, reward: 60_000_000_000, xp: 700000, hakiChance: 22 },
+    { levelMin: 800,  name: "Derrote Katakuri", baseHP: 75000, baseAtk: 1500, baseDef: 700, reward: 80_000_000_000, xp: 1000000, hakiChance: 25 },
+
+    // --- NOVO: SAGA WANO ---
+    { levelMin: 900,  name: "Derrote Urashima e Holdem", quantity: 2, baseHP: 50000, baseAtk: 1600, baseDef: 750, reward: 90_000_000_000, xp: 1200000, hakiChance: 28 },
+    { levelMin: 1000, name: "Derrote Kaido", baseHP: 200000, baseAtk: 2500, baseDef: 1000, reward: 150_000_000_000, xp: 2000000, hakiChance: 35 },
 ];
 // =====================================================
 // LOG
