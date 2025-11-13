@@ -25,7 +25,7 @@ const fruits = [
     { name: 'Bomu Bomu no Mi', image: 'frutas/Bomu_Bomu_no_Mi_Infobox.webp', rarity: 'Comum', chance: 60, special: 'Explosão', damage: 1.1 },
     { name: 'Mera Mera no Mi', image: 'frutas/meramera.png', rarity: 'Rara', chance: 30, special: 'Chama Flamejante', damage: 2 },
     { name: 'Goro Goro no Mi', image: 'frutas/Goro_Goro_no_Mi_Infobox.webp', rarity: 'Épica', chance: 15, special: 'Relâmpago Divino', damage: 5 },
-    { name: 'Gura Gura no Mi', image: 'frutas/guragura.jpg', rarity: 'Lendária', chance: 9, special: 'Abalo Sísmico', damage: 10 },
+    { name: 'Gura Gura no Mi', image: 'frutas/guragura.jpg', rarity: 'Lendária', chance: 9, special: 'Abalo Sísmico', damage: 20 },
     { name: 'Pika Pika no Mi', image: 'frutas/light.jpg', rarity: 'Lendária', chance: 9, special: 'Chute de luz', damage: 15 },
     { name: 'Hito Hito no Mi', image: 'frutas/hitothito.jpg', rarity: 'Mítica', chance: 1, special: 'Golpe da Liberdade', damage: 40 },
     { name: 'Uo Uo no Mi', image: 'frutas/uouo.jpg', rarity: 'Mítica', chance: 1, special: 'Onigashima', damage: 25 }
@@ -44,6 +44,7 @@ const missions = [
     { name: "Derrote o Gorosei", baseHP: 1000, baseAtk: 60, baseDef: 35, reward: 3_000_000_000, xp: 2000, hakiChance: 0.50 },
     { name: "Derrote Imu", baseHP: 2000, baseAtk: 90, baseDef: 50, reward: 5_000_000_000, xp: 3500, hakiChance: 0.70 },
     { name: "Derrote os 5 Gorosei", quantity: 5, baseHP: 1000, baseAtk: 120, baseDef: 80, reward: 10_000_000_000, xp: 5000, hakiChance: 1 },
+    { name: "Derrote o Xebec", baseHP: 4000, baseAtk: 400, baseDef:100, reward: 30_000_000_000, xp:10000, hakiChance:10},
     { name: "Derrote os Almirantes + Gorosei", quantity: 8, baseHP: 1200, baseAtk: 160, baseDef: 100, reward: 20_000_000_000, xp: 8000, hakiChance: 1.5 }
 ];
 
@@ -177,30 +178,42 @@ document.getElementById("openMissionMenu").onclick = () => {
 function startMission(i) {
     const m = missions[i];
 
+    // Multiplicador baseado no nível do jogador.
+    // Nível 1 = 0, Nível 2 = 1, Nível X = X-1
+    const levelFactor = player.level - 1;
+
     currentEnemy = {
         name: m.name,
-        maxHP: m.baseHP * (1 + (player.level - 1) * 0.3),
-        hp: m.baseHP * (1 + (player.level - 1) * 0.3),
-        atk: m.baseAtk * (1 + (player.level - 1) * 0.2),
-        def: m.baseDef,
+
+        // --- NOVO: Escalamento EXPONENCIAL para HP do Inimigo ---
+        // A cada nível do jogador, o HP do inimigo base aumenta em 25% (composto)
+        maxHP: Math.floor(m.baseHP * Math.pow(1.25, levelFactor)),
+        hp: Math.floor(m.baseHP * Math.pow(1.25, levelFactor)),
+
+        // --- NOVO: Escalamento EXPONENCIAL para ATK do Inimigo ---
+        // A cada nível do jogador, o ATK do inimigo base aumenta em 15% (composto)
+        atk: Math.floor(m.baseAtk * Math.pow(1.15, levelFactor)),
+
+        // A defesa pode permanecer linear ou ter um multiplicador menor
+        def: Math.floor(m.baseDef * (1 + levelFactor * 0.1)), // Defesa ainda um pouco mais linear
+
         reward: m.reward,
         xp: m.xp,
         hakiChance: m.hakiChance,
-        count: m.quantity || 1  // <-- ADICIONE ESSA LINHA
+        count: m.quantity || 1
     };
 
-    document.getElementById("enemyName").innerText = currentEnemy.name;
+    document.getElementById("enemyName").innerText = `${currentEnemy.name} (${currentEnemy.count})`;
     document.getElementById("missionInfo").innerText = m.name;
 
     log(`⚔️ Missão iniciada: ${m.name}`);
 
+    // Certifique-se de que o HP do jogador seja restaurado ao máximo total (incluindo bônus de título)
+    player.hp = getPlayerTotalMaxHP();
+
     updateStats();
     updateHPbars();
-    player.hp = getPlayerTotalMaxHP();
-    updateHPbars();
-    currentEnemy.count = m.quantity;
 }
-
 // =====================================================
 // BATTLE SYSTEM
 // =====================================================
@@ -267,26 +280,43 @@ function enemyTurn() {
 // WIN / LOSE
 // =====================================================
 function winBattle() {
-    currentEnemy.count--; // Diminui a contagem de inimigos
+    currentEnemy.count--; 
 
     // CASO 1: Ainda faltam inimigos
     if (currentEnemy.count > 0) {
+        // ... (seu código de "inimigos restantes" continua o mesmo)
         log(`⚔️ Um inimigo foi derrotado! Faltam ${currentEnemy.count}.`);
-
-        // "Cura" o inimigo para a próxima luta
-        currentEnemy.hp = currentEnemy.maxHP;
-
-        document.getElementById("enemyName").innerText = `${currentEnemy.name} (${currentEnemy.count})`; // Atualiza a contagem
+        currentEnemy.hp = currentEnemy.maxHP; 
+        document.getElementById("enemyName").innerText = `${currentEnemy.name} (${currentEnemy.count})`; 
         updateHPbars();
-
-        return; // Sai da função. AINDA NÃO DÁ A RECOMPENSA.
+        return; 
     }
 
     // CASO 2: Este era o ÚLTIMO inimigo
     log("🏆 Você venceu a missão!");
 
-    // Agora sim, damos as recompensas
-    addXP(currentEnemy.xp);
+    // --- A MUDANÇA É AQUI ---
+
+    // 1. Pega o XP base do inimigo
+    const baseXP = currentEnemy.xp;
+    
+    // 2. Pega o bônus de XP do título atual (ex: 0.20)
+    //    (Usamos a função que já criamos!)
+    const titleXpBonus = getCurrentTitleObject().bonus.xp || 0;
+    
+    // 3. Calcula o XP final
+    const totalXP = Math.floor(baseXP * (1 + titleXpBonus));
+
+    // 4. (Opcional) Mostra ao jogador que ele ganhou bônus!
+    if (titleXpBonus > 0) {
+        log(`⭐ Bônus de Título: +${Math.floor(baseXP * titleXpBonus)} XP! (+${titleXpBonus * 100}%)`);
+    }
+    
+    // 5. Adiciona o XP TOTAL
+    addXP(totalXP); 
+    
+    // --- FIM DA MUDANÇA ---
+    
     addBounty(currentEnemy.reward);
 
     if (!player.haki && Math.random() < currentEnemy.hakiChance) {
@@ -294,10 +324,8 @@ function winBattle() {
         log("⚡ Você despertou o Haki do Armamento!");
     }
 
-    // Limpa o inimigo
-    currentEnemy = null;
-
-    // Limpa a UI do inimigo
+    // ... (resto da sua função para limpar o inimigo)
+    currentEnemy = null; 
     document.getElementById("enemyName").innerText = "Inimigo";
     document.getElementById("enemyHP").innerText = "HP: 0 / 0";
     document.getElementById("enemyHPfill").style.width = "0%";
@@ -332,14 +360,14 @@ function addXP(amount) {
 // BOUNTY
 // =====================================================
 const titles = [
-    // Bônus: +HP, +Ataque, +Defesa
-    { limit: 5_000_000_000, title: 'Rei dos Piratas', bonus: { hp: 1000, atk: 250, def: 100 } },
-    { limit: 3_000_000_000, title: 'Yonkou', bonus: { hp: 500, atk: 150, def: 75 } },
-    { limit: 2_000_000_000, title: 'Comandante de Yonkou', bonus: { hp: 300, atk: 100, def: 50 } },
-    { limit: 1_000_000_000, title: 'Shichibukai', bonus: { hp: 200, atk: 70, def: 35 } },
-    { limit: 300_000_000, title: 'Supernova', bonus: { hp: 100, atk: 40, def: 20 } },
-    { limit: 100_000_000, title: 'Pirata', bonus: { hp: 50, atk: 15, def: 5 } },
-    { limit: 0, title: 'Marujo', bonus: { hp: 0, atk: 0, def: 0 } }
+    // Bônus: +HP, +Ataque, +Defesa, +XP
+    { limit: 5_000_000_000, title: 'Rei dos Piratas', bonus: { hp: 1000, atk: 250, def: 100, xp: 0.20 } }, // +20% XP
+    { limit: 3_000_000_000, title: 'Yonkou', bonus: { hp: 500, atk: 150, def: 75, xp: 0.15 } }, // +15% XP
+    { limit: 2_000_000_000, title: 'Comandante de Yonkou', bonus: { hp: 300, atk: 100, def: 50, xp: 0.10 } }, // +10% XP
+    { limit: 1_000_000_000, title: 'Shichibukai', bonus: { hp: 200, atk: 70, def: 35, xp: 0.08 } }, // +8% XP
+    { limit: 300_000_000, title: 'Supernova', bonus: { hp: 100, atk: 40, def: 20, xp: 0.05 } }, // +5% XP
+    { limit: 100_000_000, title: 'Pirata', bonus: { hp: 50, atk: 15, def: 5, xp: 0.02 } }, // +2% XP
+    { limit: 0, title: 'Marujo', bonus: { hp: 0, atk: 0, def: 0, xp: 0.0 } } // 0% XP
 ];
 
 function addBounty(amount) {
