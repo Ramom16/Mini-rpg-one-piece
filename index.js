@@ -125,19 +125,22 @@ const fruits = [
 // MISSIONS
 // =====================================================
 const missions = [
-    { name: "Derrote 2 Marinheiros Novatos", quantity: 2, baseHP: 80, baseAtk: 8, baseDef: 3, reward: 10_000_000, xp: 100, hakiChance: 0.01 },
-    { name: "Derrote 5 Marinheiros", quantity: 5, baseHP: 120, baseAtk: 12, baseDef: 5, reward: 25_000_000, xp: 200, hakiChance: 0.03 },
-    { name: "Derrote o Capitão da Marinha", baseHP: 250, baseAtk: 16, baseDef: 8, reward: 100_000_000, xp: 350, hakiChance: 0.05 },
-    { name: "Derrote o Vice-Almirante", baseHP: 500, baseAtk: 20, baseDef: 10, reward: 250_000_000, xp: 500, hakiChance: 0.08 },
-    { name: "Derrote o Almirante", baseHP: 1000, baseAtk: 26, baseDef: 13, reward: 1_000_000_000, xp: 800, hakiChance: 0.15 },
-    { name: "Derrote 2 Almirantes", quantity: 2, baseHP: 1000, baseAtk: 40, baseDef: 20, reward: 1_800_000_000, xp: 1200, hakiChance: 0.30 },
-    { name: "Derrote o Gorosei", baseHP: 1000, baseAtk: 60, baseDef: 35, reward: 3_000_000_000, xp: 2000, hakiChance: 0.50 },
-    { name: "Derrote Imu", baseHP: 2000, baseAtk: 90, baseDef: 50, reward: 5_000_000_000, xp: 3500, hakiChance: 0.70 },
-    { name: "Derrote os 5 Gorosei", quantity: 5, baseHP: 1000, baseAtk: 120, baseDef: 80, reward: 10_000_000_000, xp: 5000, hakiChance: 1 },
-    { name: "Derrote o Xebec", baseHP: 10000, baseAtk: 400, baseDef:100, reward: 30_000_000_000, xp:10000, hakiChance:10},
-    { name: "Derrote os Almirantes + Gorosei", quantity: 8, baseHP: 2000, baseAtk: 160, baseDef: 100, reward: 20_000_000_000, xp: 8000, hakiChance: 1.5 }
+    { levelMin: 1,    name: "Derrote 2 Marinheiros Novatos", quantity: 2, baseHP: 80, baseAtk: 8, baseDef: 3, reward: 10_000_000, xp: 100, hakiChance: 0.01 },
+    { levelMin: 10,   name: "Derrote 5 Marinheiros", quantity: 5, baseHP: 120, baseAtk: 12, baseDef: 5, reward: 25_000_000, xp: 200, hakiChance: 0.03 },
+    { levelMin: 25,   name: "Derrote o Capitão da Marinha", baseHP: 250, baseAtk: 16, baseDef: 8, reward: 100_000_000, xp: 350, hakiChance: 0.05 },
+    { levelMin: 40,   name: "Derrote o Vice-Almirante", baseHP: 500, baseAtk: 20, baseDef: 10, reward: 250_000_000, xp: 500, hakiChance: 0.08 },
+    { levelMin: 60,   name: "Derrote o Almirante", baseHP: 1000, baseAtk: 26, baseDef: 13, reward: 1_000_000_000, xp: 800, hakiChance: 0.15 },
+    { levelMin: 80,   name: "Derrote 2 Almirantes", quantity: 2, baseHP: 1000, baseAtk: 40, baseDef: 20, reward: 1_800_000_000, xp: 1200, hakiChance: 0.30 },
+    { levelMin: 100,  name: "Derrote o Gorosei", baseHP: 1000, baseAtk: 60, baseDef: 35, reward: 3_000_000_000, xp: 2000, hakiChance: 0.50 },
+    { levelMin: 120,  name: "Derrote Imu", baseHP: 2000, baseAtk: 90, baseDef: 50, reward: 5_000_000_000, xp: 3500, hakiChance: 0.70 },
+    { levelMin: 150,  name: "Derrote os 5 Gorosei", quantity: 5, baseHP: 1000, baseAtk: 120, baseDef: 80, reward: 10_000_000_000, xp: 5000, hakiChance: 1 },
+    { levelMin: 200,  name: "Derrote os Almirantes + Gorosei", quantity: 8, baseHP: 2000, baseAtk: 160, baseDef: 100, reward: 20_000_000_000, xp: 8000, hakiChance: 1.5 },
+    { levelMin: 250,  name: "Derrote o Xebec", baseHP: 10000, baseAtk: 400, baseDef:100, reward: 30_000_000_000, xp:10000, hakiChance:10},
+    
+    // Para chegar no Nível 10000, você precisa adicionar mais missões
+    { levelMin: 500,  name: "Derrote o Exército de Elbaf", quantity: 10, baseHP: 50000, baseAtk: 1000, baseDef:500, reward: 50_000_000_000, xp:50000, hakiChance:20}
+    // ... e assim por diante
 ];
-
 // =====================================================
 // LOG
 // =====================================================
@@ -187,10 +190,14 @@ function getPlayerTotalDef() {
 }
 
 function updateHPbars() {
-    document.getElementById("playerHP").innerText = `\HP: ${player.hp} / ${getPlayerTotalMaxHP()}`;
+    // CORRIGIDO: Removido o '\' antes de HP:
+    document.getElementById("playerHP").innerText = `HP: ${player.hp} / ${getPlayerTotalMaxHP()}`;
+    
     document.getElementById("enemyHP").innerText = `HP: ${currentEnemy.hp} / ${currentEnemy.maxHP}`;
 
-    document.getElementById("playerHPfill").style.width = `\${(player.hp / getPlayerTotalMaxHP()) * 100}%`;
+    // CORRIGIDO: Removido o '\' antes de '${'
+    document.getElementById("playerHPfill").style.width = `${(player.hp / getPlayerTotalMaxHP()) * 100}%`;
+    
     document.getElementById("enemyHPfill").style.width = `${(currentEnemy.hp / currentEnemy.maxHP) * 100}%`;
 }
 
@@ -245,19 +252,33 @@ document.getElementById("btnStart").onclick = () => {
 // =====================================================
 document.getElementById("openMissionMenu").onclick = () => {
     const menu = document.getElementById("missionMenu");
-
     menu.style.display = menu.style.display === "block" ? "none" : "block";
 
     const list = document.getElementById("missionList");
-    list.innerHTML = "";
+    list.innerHTML = ""; // Limpa a lista
 
     missions.forEach((m, index) => {
         const btn = document.createElement("button");
-        btn.innerText = m.name;
+        
+        // Mostra o nome e o nível da missão
+        btn.innerText = `${m.name} (Req: Nv ${m.levelMin})`; 
         btn.classList.add("choice-btn");
 
-        btn.onclick = () => startMission(index);
-
+        // Verifica se o jogador tem o nível
+        if (player.level >= m.levelMin) {
+            // Se sim, habilita o botão
+            btn.disabled = false;
+            btn.onclick = () => {
+                startMission(index);
+                menu.style.display = "none"; // Fecha o menu ao escolher
+            };
+        } else {
+            // Se não, desabilita o botão
+            btn.disabled = true; 
+            btn.style.opacity = "0.5"; // Deixa mais claro
+            btn.style.cursor = "not-allowed";
+        }
+        
         list.appendChild(btn);
     });
 };
@@ -268,24 +289,22 @@ document.getElementById("openMissionMenu").onclick = () => {
 function startMission(i) {
     const m = missions[i];
 
-    // Multiplicador baseado no nível do jogador.
-    // Nível 1 = 0, Nível 2 = 1, Nível X = X-1
-    const levelFactor = player.level - 1;
+    // Verifica se o jogador tem o nível (embora o menu já deva fazer isso)
+    if (player.level < m.levelMin) {
+        return log(`❌ Você precisa ser Nível ${m.levelMin} para esta missão.`);
+    }
 
     currentEnemy = {
         name: m.name,
 
-        // --- NOVO: Escalamento EXPONENCIAL para HP do Inimigo ---
-        // A cada nível do jogador, o HP do inimigo base aumenta em 25% (composto)
-        maxHP: Math.floor(m.baseHP * Math.pow(1.25, levelFactor)),
-        hp: Math.floor(m.baseHP * Math.pow(1.25, levelFactor)),
-
-        // --- NOVO: Escalamento EXPONENCIAL para ATK do Inimigo ---
-        // A cada nível do jogador, o ATK do inimigo base aumenta em 15% (composto)
-        atk: Math.floor(m.baseAtk * Math.pow(1.15, levelFactor)),
-
-        // A defesa pode permanecer linear ou ter um multiplicador menor
-        def: Math.floor(m.baseDef * (1 + levelFactor * 0.1)), // Defesa ainda um pouco mais linear
+        // --- A MUDANÇA ESTÁ AQUI ---
+        // Removemos o 'levelFactor' e 'Math.pow()'
+        // Os stats agora são FIXOS, lidos direto da missão
+        maxHP: m.baseHP,
+        hp: m.baseHP,
+        atk: m.baseAtk,
+        def: m.baseDef,
+        // --- FIM DA MUDANÇA ---
 
         reward: m.reward,
         xp: m.xp,
@@ -298,9 +317,7 @@ function startMission(i) {
 
     log(`⚔️ Missão iniciada: ${m.name}`);
 
-    // Certifique-se de que o HP do jogador seja restaurado ao máximo total (incluindo bônus de título)
-    player.hp = getPlayerTotalMaxHP();
-
+    player.hp = getPlayerTotalMaxHP(); // Cura o jogador
     updateStats();
     updateHPbars();
 }
@@ -326,8 +343,10 @@ document.getElementById("attackBtn").onclick = () => {
 document.getElementById("specialBtn").onclick = () => {
     if (!currentEnemy) return;
 
-    let dmg = getPlayerTotalAtk() * (player.fruit.damage || 1.3);
-
+    // --- MUDANÇA NA LÓGICA DO DANO ---
+    // ANTES: getPlayerTotalAtk() * player.fruit.damage
+    // AGORA: getPlayerTotalAtk() + player.fruit.damage
+    let dmg = getPlayerTotalAtk() + (player.fruit.damage || 50); // ATK + Dano da Fruta
     if (player.haki) dmg *= 2;
 
     currentEnemy.hp -= dmg;
@@ -434,15 +453,28 @@ function loseBattle() {
 function addXP(amount) {
     player.xp += amount;
 
+    // (Opcional: Reduzir a curva de XP para facilitar o up)
+    // player.nextXP = Math.floor(player.nextXP * 1.5); // (Curva Padrão)
+    player.nextXP = Math.floor(player.nextXP * 1.1); // (Curva mais suave)
+
     while (player.xp >= player.nextXP) {
         player.xp -= player.nextXP;
         player.level++;
-        player.nextXP = Math.floor(player.nextXP * 1.5);
-        player.maxHP = Math.floor(player.maxHP * 1.25);
-        player.atk = Math.floor(player.atk * 1.20);
-        player.hp = getPlayerTotalMaxHP();
 
-        log(`⬆️ Você subiu para nível ${player.level}!`);
+        // --- A MUDANÇA ESTÁ AQUI ---
+        // Troca o ganho de EXPONENCIAL para ADITIVO (soma)
+        const hpGain = 30;  // +30 de HP base por nível
+        const atkGain = 8;  // +8  de ATK base por nível
+        const defGain = 2;  // +2  de DEF base por nível
+
+        player.maxHP += hpGain;
+        player.atk += atkGain;
+        player.def += defGain;
+        // --- FIM DA MUDANÇA ---
+
+        player.hp = getPlayerTotalMaxHP(); // Cura o jogador
+
+        log(`⬆️ Você subiu para nível ${player.level}! (HP+${hpGain}, ATK+${atkGain}, DEF+${defGain})`);
     }
 }
 
@@ -508,35 +540,29 @@ function saveGame() {
 }
 
 function loadGame() {
-    // Pega o texto salvo do localStorage
     const savedData = localStorage.getItem("onePieceRPG_playerSave");
-
-    // Se existir um save...
     if (savedData) {
-        // Converte o texto de volta para um objeto
         const loadedPlayer = JSON.parse(savedData);
 
+        // 1. Carrega os dados PRIMEIRO
+        Object.assign(player, loadedPlayer);
+        log("📂 Jogo carregado!");
+
+        // 2. AGORA sim, checamos a fruta e mostramos a imagem
         if (player.fruit && player.fruit.image) {
             const imgElement = document.getElementById("fruitImage");
             imgElement.src = player.fruit.image;
             imgElement.style.display = "block";
         }
 
-        // Atualiza o 'player' principal com os dados salvos
-        // Object.assign é uma forma segura de fundir os dois objetos
-        Object.assign(player, loadedPlayer);
-
-        log("📂 Jogo carregado!");
-
-        // Atualiza a UI para mostrar os dados carregados
+        // 3. Atualiza o resto da UI
         document.getElementById("playerName").value = player.name;
         document.getElementById("fruitResult").innerText = player.fruit ?
             `${player.fruit.name} (${player.fruit.rarity})` : "Nenhuma fruta girada";
 
-        // Mostra o jogo e atualiza status/inventário
         document.getElementById("gameArea").style.display = "block";
         updateStats();
-        document.getElementById("btnStart").disabled = true; // Desabilita o "Iniciar" pois o jogo já começou
+        document.getElementById("btnStart").disabled = true;
     } else {
         log("🏴‍☠️ Novo jogo. Gire uma fruta e digite seu nome.");
     }
