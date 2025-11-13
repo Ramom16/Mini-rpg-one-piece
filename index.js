@@ -125,17 +125,17 @@ const fruits = [
 // MISSIONS
 // =====================================================
 const missions = [
-    { levelMin: 1,    name: "Derrote 2 Marinheiros Novatos", quantity: 2, baseHP: 80, baseAtk: 8, baseDef: 3, reward: 10_000_000, xp: 100, hakiChance: 0.01 },
-    { levelMin: 10,   name: "Derrote 5 Marinheiros", quantity: 5, baseHP: 120, baseAtk: 12, baseDef: 5, reward: 25_000_000, xp: 200, hakiChance: 0.03 },
-    { levelMin: 25,   name: "Derrote o Capitão da Marinha", baseHP: 250, baseAtk: 16, baseDef: 8, reward: 100_000_000, xp: 350, hakiChance: 0.05 },
-    { levelMin: 40,   name: "Derrote o Vice-Almirante", baseHP: 500, baseAtk: 20, baseDef: 10, reward: 250_000_000, xp: 500, hakiChance: 0.08 },
-    { levelMin: 60,   name: "Derrote o Almirante", baseHP: 1000, baseAtk: 26, baseDef: 13, reward: 1_000_000_000, xp: 800, hakiChance: 0.15 },
-    { levelMin: 80,   name: "Derrote 2 Almirantes", quantity: 2, baseHP: 1000, baseAtk: 40, baseDef: 20, reward: 1_800_000_000, xp: 1200, hakiChance: 0.30 },
-    { levelMin: 100,  name: "Derrote o Gorosei", baseHP: 1000, baseAtk: 60, baseDef: 35, reward: 3_000_000_000, xp: 2000, hakiChance: 0.50 },
-    { levelMin: 120,  name: "Derrote Imu", baseHP: 2000, baseAtk: 90, baseDef: 50, reward: 5_000_000_000, xp: 3500, hakiChance: 0.70 },
-    { levelMin: 150,  name: "Derrote os 5 Gorosei", quantity: 5, baseHP: 1000, baseAtk: 120, baseDef: 80, reward: 10_000_000_000, xp: 5000, hakiChance: 1 },
-    { levelMin: 200,  name: "Derrote os Almirantes + Gorosei", quantity: 8, baseHP: 2000, baseAtk: 160, baseDef: 100, reward: 20_000_000_000, xp: 8000, hakiChance: 1.5 },
-    { levelMin: 250,  name: "Derrote o Xebec", baseHP: 10000, baseAtk: 400, baseDef:100, reward: 30_000_000_000, xp:10000, hakiChance:10},
+    { levelMin: 1,    name: "Derrote 2 Marinheiros Novatos", quantity: 2, baseHP: 80, baseAtk: 8, baseDef: 3, reward: 10_000_000, xp: 500, hakiChance: 0.01 },
+    { levelMin: 10,   name: "Derrote 5 Marinheiros", quantity: 5, baseHP: 120, baseAtk: 12, baseDef: 5, reward: 25_000_000, xp: 1000, hakiChance: 0.03 },
+    { levelMin: 25,   name: "Derrote o Capitão da Marinha", baseHP: 250, baseAtk: 16, baseDef: 8, reward: 100_000_000, xp: 3500, hakiChance: 0.05 },
+    { levelMin: 40,   name: "Derrote o Vice-Almirante", baseHP: 500, baseAtk: 20, baseDef: 10, reward: 250_000_000, xp: 5000, hakiChance: 0.08 },
+    { levelMin: 60,   name: "Derrote o Almirante", baseHP: 1000, baseAtk: 26, baseDef: 13, reward: 1_000_000_000, xp: 8000, hakiChance: 0.15 },
+    { levelMin: 80,   name: "Derrote 2 Almirantes", quantity: 2, baseHP: 1000, baseAtk: 40, baseDef: 20, reward: 1_800_000_000, xp: 12000, hakiChance: 0.30 },
+    { levelMin: 100,  name: "Derrote o Gorosei", baseHP: 1000, baseAtk: 60, baseDef: 35, reward: 3_000_000_000, xp: 20000, hakiChance: 0.50 },
+    { levelMin: 120,  name: "Derrote Imu", baseHP: 2000, baseAtk: 90, baseDef: 50, reward: 5_000_000_000, xp: 35000, hakiChance: 0.70 },
+    { levelMin: 150,  name: "Derrote os 5 Gorosei", quantity: 5, baseHP: 1000, baseAtk: 120, baseDef: 80, reward: 10_000_000_000, xp: 50000, hakiChance: 1 },
+    { levelMin: 200,  name: "Derrote os Almirantes + Gorosei", quantity: 8, baseHP: 2000, baseAtk: 160, baseDef: 100, reward: 20_000_000_000, xp: 80000, hakiChance: 1.5 },
+    { levelMin: 250,  name: "Derrote o Xebec", baseHP: 10000, baseAtk: 400, baseDef:100, reward: 30_000_000_000, xp:100000, hakiChance:10},
     
     // Para chegar no Nível 10000, você precisa adicionar mais missões
     { levelMin: 500,  name: "Derrote o Exército de Elbaf", quantity: 10, baseHP: 50000, baseAtk: 1000, baseDef:500, reward: 50_000_000_000, xp:50000, hakiChance:20}
@@ -494,7 +494,7 @@ function addXP(amount) {
 
     // (Opcional: Reduzir a curva de XP para facilitar o up)
     // player.nextXP = Math.floor(player.nextXP * 1.5); // (Curva Padrão)
-    player.nextXP = Math.floor(player.nextXP * 1.1); // (Curva mais suave)
+    player.nextXP = Math.floor(player.nextXP + 50); // (Curva mais suave)
 
     while (player.xp >= player.nextXP) {
         player.xp -= player.nextXP;
