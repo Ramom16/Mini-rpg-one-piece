@@ -22,13 +22,103 @@ let currentEnemy = null;
 // FRUITS
 // =====================================================
 const fruits = [
-    { name: 'Bomu Bomu no Mi', image: 'frutas/Bomu_Bomu_no_Mi_Infobox.webp', rarity: 'Comum', chance: 60, special: 'Explosão', damage: 1.1 },
-    { name: 'Mera Mera no Mi', image: 'frutas/meramera.png', rarity: 'Rara', chance: 30, special: 'Chama Flamejante', damage: 2 },
-    { name: 'Goro Goro no Mi', image: 'frutas/Goro_Goro_no_Mi_Infobox.webp', rarity: 'Épica', chance: 15, special: 'Relâmpago Divino', damage: 5 },
-    { name: 'Gura Gura no Mi', image: 'frutas/guragura.jpg', rarity: 'Lendária', chance: 9, special: 'Abalo Sísmico', damage: 20 },
-    { name: 'Pika Pika no Mi', image: 'frutas/light.jpg', rarity: 'Lendária', chance: 9, special: 'Chute de luz', damage: 15 },
-    { name: 'Hito Hito no Mi', image: 'frutas/hitothito.jpg', rarity: 'Mítica', chance: 1, special: 'Golpe da Liberdade', damage: 40 },
-    { name: 'Uo Uo no Mi', image: 'frutas/uouo.jpg', rarity: 'Mítica', chance: 1, special: 'Onigashima', damage: 25 }
+    // --- 2 COMUNS (Total 60% de chance) ---
+    { 
+        name: 'Bomu Bomu no Mi', 
+        image: 'frutas/Bomu_Bomu_no_Mi_Infobox.webp', // (Você já tem)
+        rarity: 'Comum', 
+        chance: 30, // Chance reduzida (era 60)
+        special: 'Explosão', 
+        damage: 1.1 
+    },
+    { 
+        name: 'Bara Bara no Mi', 
+        image: 'frutas/barabara.jpg', // (IMAGEM NOVA - mude o nome)
+        rarity: 'Comum', 
+        chance: 30, // Nova chance
+        special: 'Bara Bara Festival', 
+        damage: 1.0 // Dano baixo, é o Buggy!
+    },
+
+    // --- 2 RARAS (Total 25% de chance) ---
+    { 
+        name: 'Mera Mera no Mi', 
+        image: 'frutas/meramera.png', // (Você já tem)
+        rarity: 'Rara', 
+        chance: 13, // Chance reduzida (era 25)
+        special: 'Chama Flamejante', 
+        damage: 15
+    },
+    { 
+        name: 'Doku Doku no Mi', 
+        image: 'frutas/dokudoku.jpg', // (IMAGEM NOVA - mude o nome)
+        rarity: 'Rara', 
+        chance: 12, // Nova chance
+        special: 'Hydra Venenosa', 
+        damage: 15 // Dano um pouco menor que a Mera
+    },
+
+    // --- 2 ÉPICAS (Total 10% de chance) ---
+    { 
+        name: 'Goro Goro no Mi', 
+        image: 'frutas/Goro_Goro_no_Mi_Infobox.webp', // (Você já tem)
+        rarity: 'Épica', 
+        chance: 5, // Chance reduzida (era 10)
+        special: 'Relâmpago Divino', 
+        damage: 20 
+    },
+    { 
+        name: 'Mochi Mochi no Mi', 
+        image: 'frutas/mochimochi.jpg', // (IMAGEM NOVA - mude o nome)
+        rarity: 'Épica', 
+        chance: 5, // Nova chance
+        special: 'Peerless Donut', 
+        damage: 25 // Dano do Katakuri
+    },
+
+    // --- 2 LENDÁRIAS (Total 8% de chance) ---
+    { 
+        name: 'Gura Gura no Mi', 
+        image: 'frutas/guragura.jpg', // (Você já tem)
+        rarity: 'Lendária', 
+        chance: 4, // (Chance mantida)
+        special: 'Abalo Sísmico', 
+        damage: 35.0 
+    },
+    { 
+        name: 'Pika Pika no Mi', 
+        image: 'frutas/light.jpg', // (Você já tem)
+        rarity: 'Lendária', 
+        chance: 4, // (Chance mantida)
+        special: 'Chute de Luz', 
+        damage: 30.0
+    },
+
+    // --- 3 MÍTICAS (Total 3% de chance) ---
+    { 
+        name: 'Hito Hito no Mi, Model: Nika', 
+        image: 'frutas/hitohito.jpg', // (Você já tem)
+        rarity: 'Mítica', 
+        chance: 1, // (Chance mantida)
+        special: 'Golpe da Liberdade', 
+        damage: 120.0 
+    },
+    { 
+        name: 'Uo Uo no Mi, Model: Seiryu', 
+        image: 'frutas/uouo.jpg', // (Você já tem)
+        rarity:'Mítica', 
+        chance: 1, // (Chance mantida)
+        special: 'Boro Breath', // Mudei o nome do especial do Kaido
+        damage: 100.0
+    },
+    { 
+        name: 'Tori Tori no Mi, Model: Fênix', 
+        image: 'frutas/toritori.jpg', // (IMAGEM NOVA - mude o nome)
+        rarity:'Mítica', 
+        chance: 1, // Nova chance
+        special: 'Chamas da Fênix', // Especial do Marco
+        damage: 50.0 // Dano menor, mas é mítica!
+    }
 ];
 
 // =====================================================
@@ -39,13 +129,13 @@ const missions = [
     { name: "Derrote 5 Marinheiros", quantity: 5, baseHP: 120, baseAtk: 12, baseDef: 5, reward: 25_000_000, xp: 200, hakiChance: 0.03 },
     { name: "Derrote o Capitão da Marinha", baseHP: 250, baseAtk: 16, baseDef: 8, reward: 100_000_000, xp: 350, hakiChance: 0.05 },
     { name: "Derrote o Vice-Almirante", baseHP: 500, baseAtk: 20, baseDef: 10, reward: 250_000_000, xp: 500, hakiChance: 0.08 },
-    { name: "Derrote o Almirante", baseHP: 800, baseAtk: 26, baseDef: 13, reward: 1_000_000_000, xp: 800, hakiChance: 0.15 },
-    { name: "Derrote 2 Almirantes", quantity: 2, baseHP: 800, baseAtk: 40, baseDef: 20, reward: 1_800_000_000, xp: 1200, hakiChance: 0.30 },
+    { name: "Derrote o Almirante", baseHP: 1000, baseAtk: 26, baseDef: 13, reward: 1_000_000_000, xp: 800, hakiChance: 0.15 },
+    { name: "Derrote 2 Almirantes", quantity: 2, baseHP: 1000, baseAtk: 40, baseDef: 20, reward: 1_800_000_000, xp: 1200, hakiChance: 0.30 },
     { name: "Derrote o Gorosei", baseHP: 1000, baseAtk: 60, baseDef: 35, reward: 3_000_000_000, xp: 2000, hakiChance: 0.50 },
     { name: "Derrote Imu", baseHP: 2000, baseAtk: 90, baseDef: 50, reward: 5_000_000_000, xp: 3500, hakiChance: 0.70 },
     { name: "Derrote os 5 Gorosei", quantity: 5, baseHP: 1000, baseAtk: 120, baseDef: 80, reward: 10_000_000_000, xp: 5000, hakiChance: 1 },
-    { name: "Derrote o Xebec", baseHP: 4000, baseAtk: 400, baseDef:100, reward: 30_000_000_000, xp:10000, hakiChance:10},
-    { name: "Derrote os Almirantes + Gorosei", quantity: 8, baseHP: 1200, baseAtk: 160, baseDef: 100, reward: 20_000_000_000, xp: 8000, hakiChance: 1.5 }
+    { name: "Derrote o Xebec", baseHP: 10000, baseAtk: 400, baseDef:100, reward: 30_000_000_000, xp:10000, hakiChance:10},
+    { name: "Derrote os Almirantes + Gorosei", quantity: 8, baseHP: 2000, baseAtk: 160, baseDef: 100, reward: 20_000_000_000, xp: 8000, hakiChance: 1.5 }
 ];
 
 // =====================================================
