@@ -1,169 +1,249 @@
+/* ============================================== */
+/* === TEMA ONE PIECE (CARTAZ DE PROCURADO) === */
+/* ============================================== */
+@import url('https://fonts.googleapis.com/css2?family=Pirata+One&family=IM+Fell+English&display=swap');
+
 :root {
-    --bg: #071020;
-    --panel: #0f2433;
-    --accent: #ffcc33;
-    --muted: #9fb3c8
+  /* Paleta de Cores "Papiro e Tinta" (Contraste Corrigido) */
+  --bg: #f4e9d5;     /* Cor do papiro/fundo */
+  --panel: #e8d9b7;  /* Cor do painel (um pouco mais escura) */
+  --text: #3d2c1b;  /* Cor da tinta (MARROM BEM ESCURO) */
+  --accent: #c0392b;  /* Vermelho (selo/sangue/Luffy) */
+  --muted: #6b5a4a;  /* Tinta desbotada (MAIS ESCURA) */
+  --border: #c5a97a;  /* Borda do "cartaz" */
 }
 
 * {
-    box-sizing: border-box;
-    font-family: Inter, system-ui, Arial, Helvetica, sans-serif
+  box-sizing: border-box;
+  /* Fonte que imita tinta antiga */
+  font-family: 'IM Fell English', serif;
 }
 
 body {
-    margin: 0;
-    background: linear-gradient(180deg, #031427 0%, #071020 100%);
-    color: #e6f7ff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh
+  margin: 0;
+  /* Fundo de papiro antigo */
+  background: radial-gradient(ellipse at center, #f4e9d5 0%, #e9d8a1 100%);
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
 }
 
 .container {
-    width: 980px;
-    max-width: 95%;
-    background: linear-gradient(180deg, rgba(255, 255, 255, .03), rgba(255, 255, 255, .01));
-    border-radius: 12px;
-    padding: 18px;
-    box-shadow: 0 8px 40px rgba(0, 0, 0, .6)
-}
-
-header {
-    display: flex;
-    gap: 12px;
-    align-items: center
+  width: 980px;
+  max-width: 95%;
+  /* O "cartaz" principal, com uma borda grossa */
+  background: #faf3dd; /* Papel mais claro por dentro */
+  border-radius: 8px; /* Cantos levemente arredondados */
+  padding: 18px;
+  border: 4px solid var(--border);
+  border-bottom-width: 8px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, .4);
 }
 
 header h1 {
-    margin: 0;
-    font-size: 20px;
-    color: var(--accent)
+  margin: 0;
+  /* Fonte "Pirata" para o título */
+  font-family: 'Pirata One', cursive;
+  font-size: 28px;
+  color: var(--accent);
+  text-transform: uppercase;
+  text-align: center;
+  letter-spacing: 1px;
 }
 
 .topbar {
-    display: flex;
-    gap: 12px;
-    margin-top: 10px
+  display: flex;
+  gap: 12px;
+  margin-top: 10px;
 }
 
 .panel {
-    background: var(--panel);
-    padding: 12px;
-    border-radius: 10px;
-    flex: 1
+  background: var(--panel);
+  padding: 12px;
+  border-radius: 6px;
+  flex: 1;
+  /* Borda interna sutil */
+  border: 1px solid rgba(0, 0, 0, .05);
 }
 
 .left {
-    width: 360px
+  width: 360px;
 }
 
 .right {
-    flex: 1
+  flex: 1;
 }
 
 label {
-    display: block;
-    font-size: 13px;
-    color: var(--muted);
-    margin-bottom: 6px
+  display: block;
+  font-size: 14px;
+  color: var(--muted);
+  margin-bottom: 6px;
+  font-family: 'Pirata One', cursive; /* Títulos de pirata */
+  font-size: 16px;
 }
 
 input[type=text] {
-    width: 100%;
-    padding: 8px;
-    border-radius: 8px;
-    border: 1px solid rgba(255, 255, 255, .06);
-    background: transparent;
-    color: inherit
+  width: 100%;
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid var(--border);
+  background: #fff; /* Fundo branco para digitar */
+  color: var(--text);
+  font-size: 16px;
 }
 
 button {
-    background: var(--accent);
-    border: none;
-    color: #071020;
-    padding: 8px 12px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: 600;
-    margin-top: 4px
+  background: var(--accent); /* Cor de selo vermelho */
+  border: none;
+  color: #fff;
+  padding: 10px 14px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: 'Pirata One', cursive; /* Fonte pirata */
+  font-weight: 600;
+  font-size: 16px;
+  text-transform: uppercase;
+  margin-top: 4px;
+  border-bottom: 2px solid #a03020; /* Sombra do botão */
+  transition: all 0.1s ease-in-out;
+}
+button:hover {
+  filter: brightness(1.1);
+}
+button:active {
+  transform: translateY(1px);
+  border-bottom-width: 1px;
 }
 
 .log {
-    height: 160px;
-    overflow: auto;
-    background: rgba(0, 0, 0, .15);
-    padding: 8px;
-    border-radius: 8px;
-    font-size: 13px
+  height: 160px;
+  overflow: auto;
+  background: rgba(0, 0, 0, .03);
+  padding: 8px;
+  border-radius: 4px;
+  font-size: 14px;
+  border: 1px dashed var(--muted); /* Borda tracejada */
 }
+/* Muda a cor da barra de scroll */
+.log::-webkit-scrollbar { width: 6px; }
+.log::-webkit-scrollbar-track { background: transparent; }
+.log::-webkit-scrollbar-thumb { background: var(--muted); border-radius: 4px; }
 
 .status {
-    display: flex;
-    gap: 8px;
-    align-items: center
+  display: flex;
+  gap: 8px;
+  align-items: center;
 }
 
 .hpbar {
-    height: 14px;
-    background: rgba(255, 255, 255, .06);
-    border-radius: 8px;
-    overflow: hidden;
-    width: 100%
+  height: 14px;
+  background: rgba(0, 0, 0, .1);
+  border-radius: 8px;
+  overflow: hidden;
+  width: 100%;
+  border: 1px solid var(--muted);
 }
 
 .hpfill {
-    height: 100%;
-    background: linear-gradient(90deg, #28c76f, #9be37d);
-    width: 50%
+  height: 100%;
+  width: 100%;
+}
+/* HP do Jogador (Verde Clássico) */
+#playerHPfill {
+  background: linear-gradient(90deg, #27ae60, #2ecc71);
+}
+/* HP do Inimigo (Vermelho) */
+#enemyHPfill {
+  background: linear-gradient(90deg, #c0392b, #e74c3c);
 }
 
 .enemy,
 .player {
-    display: flex;
-    align-items: center;
-    gap: 10px
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .character-card {
-    background: linear-gradient(180deg, rgba(255, 255, 255, .01), rgba(255, 255, 255, .02));
-    padding: 10px;
-    border-radius: 8px;
-    margin-top: 6px
+  background: rgba(255, 255, 255, .1);
+  padding: 10px;
+  border-radius: 8px;
+  margin-top: 6px;
+  border: 1px solid var(--border);
+}
+.character-card .small:first-child {
+  font-family: 'Pirata One', cursive;
+  font-size: 18px;
+  color: var(--text);
 }
 
 .small {
-    font-size: 13px;
-    color: var(--muted)
+  font-size: 14px;
+  color: var(--muted);
 }
 
 .choice-btn {
-    background: transparent;
-    border: 1px solid rgba(255, 255, 255, .06);
-    padding: 8px;
-    border-radius: 8px;
-    color: inherit;
-    cursor: pointer
+  /* Botões de escolha com estilo de "tinta" */
+  background: transparent;
+  border: 2px solid var(--text);
+  padding: 8px;
+  border-radius: 4px;
+  color: var(--text);
+  font-family: 'IM Fell English', serif;
+  font-weight: bold;
+  font-size: 15px;
+  text-transform: none;
+  transition: all 0.2s ease;
 }
+.choice-btn:hover {
+  /* Inverte as cores no hover */
+  background: var(--text);
+  color: var(--bg);
+  border-color: var(--text);
+}
+
 .mission-menu {
-    background: #111;
-    border: 2px solid #444;
-    padding: 15px;
-    width: 300px;
-    display: none;
-    margin-top: 10px;
+  background: #fdf8e8; /* Fundo de papel mais claro */
+  border: 2px solid var(--text);
+  padding: 15px;
+  width: 300px;
+  display: none;
+  margin-top: 10px;
+  box-shadow: 0 5px 15px rgba(0,0,0,.2);
+}
+.mission-menu h3 {
+  font-family: 'Pirata One', cursive;
+  text-align: center;
+  margin-top: 0;
+  color: var(--accent);
 }
 
 .mission-menu button {
-    width: 100%;
-    padding: 8px;
-    margin: 5px 0;
-    background: #222;
-    border: 1px solid #555;
-    color: white;
-    cursor: pointer;
+  width: 100%;
+  padding: 8px;
+  margin: 5px 0;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-family: 'IM Fell English', serif;
+  font-weight: bold;
+  font-size: 15px;
+  text-transform: none;
 }
 
 .mission-menu button:hover {
-    background: #333;
+  background: var(--border);
+}
+
+/* Responsividade (A mesma que sugeri antes) */
+@media (max-width: 768px) {
+  .topbar {
+    flex-direction: column;
+  }
+  .left {
+    width: 100%;
+  }
 }

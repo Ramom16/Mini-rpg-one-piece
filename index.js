@@ -26,25 +26,25 @@ const fruits = [
     { name: 'Mera Mera no Mi', rarity: 'Rara', chance: 25, special: 'Chama Flamejante', damage: 2 },
     { name: 'Goro Goro no Mi', rarity: 'Épica', chance: 10, special: 'Relâmpago Divino', damage: 5 },
     { name: 'Gura Gura no Mi', rarity: 'Lendária', chance: 4, special: 'Abalo Sísmico', damage: 10 },
-    { name: 'Pika Pika no Mi', rarity: 'Lendária', chance: 4, special: 'Chute de luz', damage: 15},
+    { name: 'Pika Pika no Mi', rarity: 'Lendária', chance: 4, special: 'Chute de luz', damage: 15 },
     { name: 'Hito Hito no Mi', rarity: 'Mítica', chance: 1, special: 'Golpe da Liberdade', damage: 40 },
-    { name: 'Uo Uo no Mi', rarity:'Mítica', chance: 1, special: 'Onigashima', damage: 25}
+    { name: 'Uo Uo no Mi', rarity: 'Mítica', chance: 1, special: 'Onigashima', damage: 25 }
 ];
 
 // =====================================================
 // MISSIONS
 // =====================================================
 const missions = [
-    { name: "Derrote 2 Marinheiros Novatos", baseHP: 80, baseAtk: 8, baseDef: 3, reward: 100_000_000, xp: 100, hakiChance: 0.01 },
-    { name: "Derrote 5 Marinheiros", baseHP: 120, baseAtk: 12, baseDef: 5, reward: 250_000_000, xp: 200, hakiChance: 0.03 },
-    { name: "Derrote o Capitão da Marinha", baseHP: 160, baseAtk: 16, baseDef: 8, reward: 300_000_000, xp: 350, hakiChance: 0.05 },
-    { name: "Derrote o Vice-Almirante", baseHP: 200, baseAtk: 20, baseDef: 10, reward: 600_000_000, xp: 500, hakiChance: 0.08 },
+    { name: "Derrote 2 Marinheiros Novatos", quantity: 2, baseHP: 80, baseAtk: 8, baseDef: 3, reward: 10_000_000, xp: 100, hakiChance: 0.01 },
+    { name: "Derrote 5 Marinheiros", quantity: 5, baseHP: 120, baseAtk: 12, baseDef: 5, reward: 25_000_000, xp: 200, hakiChance: 0.03 },
+    { name: "Derrote o Capitão da Marinha", baseHP: 160, baseAtk: 16, baseDef: 8, reward: 100_000_000, xp: 350, hakiChance: 0.05 },
+    { name: "Derrote o Vice-Almirante", baseHP: 200, baseAtk: 20, baseDef: 10, reward: 250_000_000, xp: 500, hakiChance: 0.08 },
     { name: "Derrote o Almirante", baseHP: 260, baseAtk: 26, baseDef: 13, reward: 1_000_000_000, xp: 800, hakiChance: 0.10 },
-    { name: "Derrote 2 Almirantes", baseHP: 350, baseAtk: 40, baseDef: 20, reward: 1_800_000_000, xp: 1200, hakiChance: 0.12 },
+    { name: "Derrote 2 Almirantes", quantity: 2, baseHP: 350, baseAtk: 40, baseDef: 20, reward: 1_800_000_000, xp: 1200, hakiChance: 0.12 },
     { name: "Derrote o Gorosei", baseHP: 500, baseAtk: 60, baseDef: 35, reward: 3_000_000_000, xp: 2000, hakiChance: 0.15 },
     { name: "Derrote Imu", baseHP: 700, baseAtk: 90, baseDef: 50, reward: 5_000_000_000, xp: 3500, hakiChance: 0.20 },
-    { name: "Derrote os 5 Gorosei", baseHP: 900, baseAtk: 120, baseDef: 80, reward: 10_000_000_000, xp: 5000, hakiChance: 0.25 },
-    { name: "Derrote os Almirantes + Gorosei", baseHP: 1200, baseAtk: 160, baseDef: 100, reward: 20_000_000_000, xp: 8000, hakiChance: 0.30 }
+    { name: "Derrote os 5 Gorosei", quantity: 5, baseHP: 900, baseAtk: 120, baseDef: 80, reward: 10_000_000_000, xp: 5000, hakiChance: 0.25 },
+    { name: "Derrote os Almirantes + Gorosei", quantity: 8, baseHP: 1200, baseAtk: 160, baseDef: 100, reward: 20_000_000_000, xp: 8000, hakiChance: 0.30 }
 ];
 
 // =====================================================
@@ -154,7 +154,7 @@ function startMission(i) {
         reward: m.reward,
         xp: m.xp,
         hakiChance: m.hakiChance,
-
+        count: m.quantity || 1  // <-- ADICIONE ESSA LINHA
     };
 
     document.getElementById("enemyName").innerText = currentEnemy.name;
@@ -166,6 +166,7 @@ function startMission(i) {
     updateHPbars();
     player.hp = player.maxHP;
     updateHPbars();
+    currentEnemy.count = m.quantity;
 }
 
 // =====================================================
@@ -234,8 +235,25 @@ function enemyTurn() {
 // WIN / LOSE
 // =====================================================
 function winBattle() {
-    log("🏆 Você venceu!");
+    currentEnemy.count--; // Diminui a contagem de inimigos
 
+    // CASO 1: Ainda faltam inimigos
+    if (currentEnemy.count > 0) {
+        log(`⚔️ Um inimigo foi derrotado! Faltam ${currentEnemy.count}.`);
+        
+        // "Cura" o inimigo para a próxima luta
+        currentEnemy.hp = currentEnemy.maxHP; 
+        
+        document.getElementById("enemyName").innerText = `${currentEnemy.name} (${currentEnemy.count})`; // Atualiza a contagem
+        updateHPbars();
+        
+        return; // Sai da função. AINDA NÃO DÁ A RECOMPENSA.
+    }
+
+    // CASO 2: Este era o ÚLTIMO inimigo
+    log("🏆 Você venceu a missão!");
+
+    // Agora sim, damos as recompensas
     addXP(currentEnemy.xp);
     addBounty(currentEnemy.reward);
 
@@ -245,14 +263,14 @@ function winBattle() {
     }
 
     // Limpa o inimigo
-    currentEnemy = {
-        name: "Nenhum",
-        hp: 0,
-        maxHP: 1
-    };
+    currentEnemy = null; 
+
+    // Limpa a UI do inimigo
+    document.getElementById("enemyName").innerText = "Inimigo";
+    document.getElementById("enemyHP").innerText = "HP: 0 / 0";
+    document.getElementById("enemyHPfill").style.width = "0%";
 
     updateStats();
-    updateHPbars(); // <-- ESSENCIAL PARA ZERAR BARRA
 }
 
 function loseBattle() {
@@ -282,28 +300,37 @@ function addXP(amount) {
 // BOUNTY
 // =====================================================
 const titles = [
-    { limit: 50_000_000, title: 'Marujo' },
-    { limit: 100_000_000, title: 'Pirata' },
-    { limit: 300_000_000, title: 'Supernova' },
-    { limit: 1_000_000_000, title: 'Shichibukai' },
+    { limit: 5_000_000_000, title: 'Rei dos Piratas' }, // O último título do seu array original
+    { limit: 3_000_000_000, title: 'Yonkou' }, // Ajustei o limite do Yonkou
     { limit: 2_000_000_000, title: 'Comandante de Yonkou' },
-    { limit: 5_000_000_000, title: 'Yonkou' },
-    { limit: Infinity, title: 'Rei dos Piratas' }
+    { limit: 1_000_000_000, title: 'Shichibukai' },
+    { limit: 300_000_000, title: 'Supernova' },
+    { limit: 100_000_000, title: 'Pirata' },
+    { limit: 0, title: 'Marujo' } // Começa com 0
 ];
 
 function addBounty(amount) {
     player.bounty += amount;
+    let newTitle = player.title; // Pega o título atual
 
+    // Loop do mais alto para o mais baixo
     for (const t of titles) {
-        if (player.bounty < t.limit) {
-            player.title = t.title;
-            break;
+        if (player.bounty >= t.limit) {
+            newTitle = t.title;
+            break; // Achou o título mais alto que o jogador merece
         }
     }
 
-    log(`💰 Nova recompensa: ${player.bounty.toLocaleString()} — ${player.title}`);
-    updateStats();
+    // Se o título mudou, mostre um log especial
+    if (newTitle !== player.title) {
+        player.title = newTitle;
+        log(`👑 Seu título foi atualizado para ${player.title}!`);
+    }
+
+    log(`💰 Nova recompensa: ${player.bounty.toLocaleString()}`);
+    updateStats(); // Atualiza a UI uma vez no final
 }
+
 
 // =====================================================
 // RESET GAME
