@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="pt-BR">
+
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Mini RPG - One Piece (Piratas vs Marinha)</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <div class="container">
+    <header>
+      <h1>Mini RPG — One Piece: Piratas vs Marinha</h1>
+    </header>
+
+    <div class="topbar">
+      <div class="panel left">
+        <div class="character-card">
+          <label for="playerName">Nome do seu personagem</label>
+          <input type="text" id="playerName" placeholder="Seu nome"><br>
+
+          <button id="rollFruitBtn">Girar Fruta</button>
+          <p id="fruitResult">Nenhuma fruta girada ainda</p>
+
+          <button id="btnStart">Iniciar Jogo</button>
+
+          <div id="gameArea" style="display:none;">
+            <!-- aqui fica o jogo -->
+          </div>
+
+          <button id="resetBtn">Reiniciar</button>
+
+        </div>
+
+        <div class="character-card">
+          <div class="small">Status</div>
+          <div id="statusInfo" class="small">Nível: 1 | XP: 0 | Bounty: 0 | Título: Marujo</div>
+        </div>
+
+        <div class="character-card">
+          <div class="small">Inventário</div>
+          <div id="inventory" class="small">Nenhuma fruta equipada</div>
+        </div>
+
+        <div class="character-card">
+          <div class="small">Missão Atual</div>
+          <div id="missionInfo" class="small">Nenhuma missão iniciada</div>
+        </div>
+      </div>
+
+      <div id="missionMenu" class="mission-menu">
+        <h3>Missões Disponíveis</h3>
+        <div id="missionList"></div>
+      </div>
+      <button id="openMissionMenu">Escolher Missão</button>
+
+      <div class="panel right">
+        <div class="status" style="justify-content:space-between">
+          <div class="player">
+            <div style="width:150px">
+              <div class="small">Você</div>
+              <div class="hpbar">
+                <div id="playerHPfill" class="hpfill" style="width:100%"></div>
+              </div>
+              <div class="small" id="playerHP">HP: 100 / 100</div>
+            </div>
+          </div>
+          <div class="enemy">
+            <div style="width:170px;text-align:right">
+              <div class="small" id="enemyName">Inimigo</div>
+              <div class="hpbar">
+                <div id="enemyHPfill" class="hpfill" style="width:100%"></div>
+              </div>
+              <div class="small" id="enemyHP">HP: 100 / 100</div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <button id="attackBtn" class="choice-btn">Atacar</button>
+          <button id="specialBtn" class="choice-btn">Especial</button>
+          <button id="defendBtn" class="choice-btn">Defender</button>
+        </div>
+
+        <div class="log" id="log"></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="index.js"></script>
+</body>
+
+</html>

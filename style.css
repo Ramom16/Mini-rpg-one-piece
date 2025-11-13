@@ -1,0 +1,169 @@
+:root {
+    --bg: #071020;
+    --panel: #0f2433;
+    --accent: #ffcc33;
+    --muted: #9fb3c8
+}
+
+* {
+    box-sizing: border-box;
+    font-family: Inter, system-ui, Arial, Helvetica, sans-serif
+}
+
+body {
+    margin: 0;
+    background: linear-gradient(180deg, #031427 0%, #071020 100%);
+    color: #e6f7ff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh
+}
+
+.container {
+    width: 980px;
+    max-width: 95%;
+    background: linear-gradient(180deg, rgba(255, 255, 255, .03), rgba(255, 255, 255, .01));
+    border-radius: 12px;
+    padding: 18px;
+    box-shadow: 0 8px 40px rgba(0, 0, 0, .6)
+}
+
+header {
+    display: flex;
+    gap: 12px;
+    align-items: center
+}
+
+header h1 {
+    margin: 0;
+    font-size: 20px;
+    color: var(--accent)
+}
+
+.topbar {
+    display: flex;
+    gap: 12px;
+    margin-top: 10px
+}
+
+.panel {
+    background: var(--panel);
+    padding: 12px;
+    border-radius: 10px;
+    flex: 1
+}
+
+.left {
+    width: 360px
+}
+
+.right {
+    flex: 1
+}
+
+label {
+    display: block;
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 6px
+}
+
+input[type=text] {
+    width: 100%;
+    padding: 8px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, .06);
+    background: transparent;
+    color: inherit
+}
+
+button {
+    background: var(--accent);
+    border: none;
+    color: #071020;
+    padding: 8px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    margin-top: 4px
+}
+
+.log {
+    height: 160px;
+    overflow: auto;
+    background: rgba(0, 0, 0, .15);
+    padding: 8px;
+    border-radius: 8px;
+    font-size: 13px
+}
+
+.status {
+    display: flex;
+    gap: 8px;
+    align-items: center
+}
+
+.hpbar {
+    height: 14px;
+    background: rgba(255, 255, 255, .06);
+    border-radius: 8px;
+    overflow: hidden;
+    width: 100%
+}
+
+.hpfill {
+    height: 100%;
+    background: linear-gradient(90deg, #28c76f, #9be37d);
+    width: 50%
+}
+
+.enemy,
+.player {
+    display: flex;
+    align-items: center;
+    gap: 10px
+}
+
+.character-card {
+    background: linear-gradient(180deg, rgba(255, 255, 255, .01), rgba(255, 255, 255, .02));
+    padding: 10px;
+    border-radius: 8px;
+    margin-top: 6px
+}
+
+.small {
+    font-size: 13px;
+    color: var(--muted)
+}
+
+.choice-btn {
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, .06);
+    padding: 8px;
+    border-radius: 8px;
+    color: inherit;
+    cursor: pointer
+}
+.mission-menu {
+    background: #111;
+    border: 2px solid #444;
+    padding: 15px;
+    width: 300px;
+    display: none;
+    margin-top: 10px;
+}
+
+.mission-menu button {
+    width: 100%;
+    padding: 8px;
+    margin: 5px 0;
+    background: #222;
+    border: 1px solid #555;
+    color: white;
+    cursor: pointer;
+}
+
+.mission-menu button:hover {
+    background: #333;
+}
