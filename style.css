@@ -69,6 +69,42 @@ header h1 {
   border: 1px solid var(--border);
 }
 
+.shop-menu {
+  background: #fdf8e8; /* (Use as cores do seu tema) */
+  border: 2px solid var(--text);
+  padding: 15px;
+  width: 300px;
+  display: none;
+  margin-top: 10px;
+  box-shadow: 0 5px 15px rgba(0,0,0,.2);
+}
+.shop-menu h3 {
+  font-family: 'Pirata One', cursive;
+  text-align: center;
+  margin-top: 0;
+  color: var(--accent);
+}
+.shop-menu button {
+  width: 100%;
+  padding: 8px;
+  margin: 5px 0;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-family: 'IM Fell English', serif;
+  font-weight: bold;
+  font-size: 15px;
+  text-transform: none;
+}
+.shop-menu button:hover {
+  background: var(--border);
+}
+.shop-menu .shop-item-details { /* Estilo para o bônus/custo */
+  font-size: 13px;
+  color: var(--muted);
+  pointer-events: none; /* Faz o clique atravessar o texto */
+}
+
 .panel {
   background: var(--panel);
   padding: 12px;

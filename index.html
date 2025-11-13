@@ -22,6 +22,9 @@
           <input type="text" id="playerName" placeholder="Seu nome"><br>
 
           <button id="rollFruitBtn">Girar Fruta</button>
+          <p id="fruitRollsInfo" class="small" style="margin-top: 5px;">
+            Rolagens restantes: <strong id="fruitRollsCount">5</strong>
+          </p>
 
           <img id="fruitImage" src="" alt="Fruta" class="fruit-image" style="display: none;">
 
@@ -49,51 +52,62 @@
         </div>
 
         <div class="character-card">
-          <div class="small">Missão Atual</div>
-          <div id="missionInfo" class="small">Nenhuma missão iniciada</div>
+          <div class="small">Equipamento (Arma)</div>
+          <div id="equipmentInfo" class="small">Nenhuma arma equipada</div>
         </div>
-      </div>
 
-      <div id="missionMenu" class="mission-menu">
-        <h3>Missões Disponíveis</h3>
-        <div id="missionList"></div>
-      </div>
-      <button id="openMissionMenu">Escolher Missão</button>
+        <div class="character-card">
+                    <div class="small">Missão Atual</div>
+                    <div id="missionInfo" class="small">Nenhuma missão iniciada</div>
+                  </div>
 
-      <div class="panel right">
-        <div class="status" style="justify-content:space-between">
-          <div class="player">
-            <div style="width:150px">
-              <div class="small">Você</div>
-              <div class="hpbar">
-                <div id="playerHPfill" class="hpfill" style="width:100%"></div>
+                       
+        <button id="openMissionMenu">Escolher Missão</button>
+                <button id="openShopBtn">Loja de Armas</button>        
+                        <div id="missionMenu" class="mission-menu">
+                    <h3>Missões Disponíveis</h3>
+                    <div id="missionList"></div>
+                  </div>
+               
+                        <div id="shopMenu" class="shop-menu">
+                    <h3>Loja de Armas (Bounty)</h3>
+                    <div id="shopList"></div>
+                  </div>
+
+        <div class="panel right">
+          <div class="status" style="justify-content:space-between">
+            <div class="player">
+              <div style="width:150px">
+                <div class="small">Você</div>
+                <div class="hpbar">
+                  <div id="playerHPfill" class="hpfill" style="width:100%"></div>
+                </div>
+                <div class="small" id="playerHP">HP: 100 / 100</div>
               </div>
-              <div class="small" id="playerHP">HP: 100 / 100</div>
+            </div>
+            <div class="enemy">
+              <div style="width:170px;text-align:right">
+                <div class="small" id="enemyName">Inimigo</div>
+                <div class="hpbar">
+                  <div id="enemyHPfill" class="hpfill" style="width:100%"></div>
+                </div>
+                <div class="small" id="enemyHP">HP: 100 / 100</div>
+              </div>
             </div>
           </div>
-          <div class="enemy">
-            <div style="width:170px;text-align:right">
-              <div class="small" id="enemyName">Inimigo</div>
-              <div class="hpbar">
-                <div id="enemyHPfill" class="hpfill" style="width:100%"></div>
-              </div>
-              <div class="small" id="enemyHP">HP: 100 / 100</div>
-            </div>
+
+          <div>
+            <button id="attackBtn" class="choice-btn">Atacar</button>
+            <button id="specialBtn" class="choice-btn">Especial</button>
+            <button id="defendBtn" class="choice-btn">Defender</button>
           </div>
-        </div>
 
-        <div>
-          <button id="attackBtn" class="choice-btn">Atacar</button>
-          <button id="specialBtn" class="choice-btn">Especial</button>
-          <button id="defendBtn" class="choice-btn">Defender</button>
+          <div class="log" id="log"></div>
         </div>
-
-        <div class="log" id="log"></div>
       </div>
     </div>
-  </div>
 
-  <script src="index.js"></script>
+    <script src="index.js"></script>
 </body>
 
 </html>

@@ -16,6 +16,8 @@ const player = {
     title: "Marujo",
     fruit: null,
     haki: false,
+    fruitRolls: 5, // <-- ADICIONE AQUI (começa com 5)
+    weapon: null, // <-- ADICIONE ESTA LINHA
 };
 
 let currentEnemy = null;
@@ -124,6 +126,64 @@ const fruits = [
 ];
 
 // =====================================================
+// WEAPON SHOP
+// =====================================================
+const weapons = [
+    // --- 2 COMUNS ---
+    { 
+        name: 'Cutelo da Marinha', 
+        rarity: 'Comum', 
+        cost: 500_000_000, // 500 Milhões
+        bonus: { atk: 50, def: 10 } 
+    },
+    { 
+        name: 'Katana Simples', 
+        rarity: 'Comum', 
+        cost: 750_000_000, // 750 Milhões
+        bonus: { atk: 80, def: 5 } 
+    },
+    // --- 2 ÉPICAS ---
+    { 
+        name: 'Nodachi (Lâmina Longa)', 
+        rarity: 'Épica', 
+        cost: 5_000_000_000, // 5 Bilhões
+        bonus: { atk: 300, def: 100 } 
+    },
+    { 
+        name: 'Yubashiri (Lâmina Leve)', 
+        rarity: 'Épica', 
+        cost: 8_000_000_000, // 8 Bilhões
+        bonus: { atk: 450, def: 50 } 
+    },
+    // --- 2 LENDÁRIAS ---
+    { 
+        name: 'Wado Ichimonji', 
+        rarity: 'Lendária', 
+        cost: 25_000_000_000, // 25 Bilhões
+        bonus: { atk: 1000, def: 300 } 
+    },
+    { 
+        name: 'Shusui (Lâmina Negra)', 
+        rarity: 'Lendária', 
+        cost: 40_000_000_000, // 40 Bilhões
+        bonus: { atk: 1500, def: 200 } 
+    },
+    // --- 2 MÍTICAS ---
+    { 
+        name: 'Gryphon (Espada do Shanks)', 
+        rarity: 'Mítica', 
+        cost: 80_000_000_000, // 80 Bilhões
+        bonus: { atk: 3000, def: 1000 } 
+    },
+    { 
+        name: 'Yoru (Espada do Mihawk)', 
+        rarity: 'Mítica', 
+        cost: 100_000_000_000, // 100 Bilhões
+        bonus: { atk: 5000, def: 500 } 
+    }
+];
+
+// =====================================================
 // MISSIONS
 // =====================================================
 const missions = [
@@ -178,6 +238,11 @@ function updateStats() {
 
     document.getElementById("inventory").innerText =
         player.fruit ? player.fruit.name : "Nenhuma fruta equipada";
+
+        document.getElementById("equipmentInfo").innerText = 
+        player.weapon ? player.weapon.name : "Nenhuma arma equipada";
+    
+    document.getElementById("fruitRollsCount").innerText = player.fruitRolls;
 }
 // =====================================================
 // CALCULADORA DE STATUS (GETTERS)
@@ -200,12 +265,22 @@ function getPlayerTotalMaxHP() {
 
 // Retorna o Ataque total (Base + Bônus)
 function getPlayerTotalAtk() {
-    return player.atk + getCurrentTitleObject().bonus.atk;
+    const titleBonus = getCurrentTitleObject().bonus.atk || 0;
+    
+    // Pega o bônus da arma (ou 0 se não tiver arma)
+    const weaponBonus = player.weapon ? player.weapon.bonus.atk : 0;
+    
+    return player.atk + titleBonus + weaponBonus;
 }
 
 // Retorna a Defesa total (Base + Bônus)
 function getPlayerTotalDef() {
-    return player.def + getCurrentTitleObject().bonus.def;
+    const titleBonus = getCurrentTitleObject().bonus.def || 0;
+    
+    // Pega o bônus da arma (ou 0 se não tiver arma)
+    const weaponBonus = player.weapon ? player.weapon.bonus.def : 0;
+
+    return player.def + titleBonus + weaponBonus;
 }
 
 function updateHPbars() {
@@ -230,6 +305,14 @@ document.getElementById("rollFruitBtn").onclick = () => {
     const rollBonus = titleObject.bonus.rollBonus || {}; // Pega o {legendary, mythic}
     const legendaryBonus = rollBonus.legendary || 0;
     const mythicBonus = rollBonus.mythic || 0;
+
+    if (player.fruitRolls <= 0) {
+        log("❌ Você não tem mais rolagens! Suba de nível para ganhar mais.");
+        return; // Para a função aqui
+    }
+    
+    player.fruitRolls--; // Gasta a rolagem!
+    updateStats(); // Atualiza o contador na tela
 
     // 2. Calcula o NOVO 'total' de chances, incluindo os bônus
     let total = 0;
@@ -304,7 +387,64 @@ document.getElementById("btnStart").onclick = () => {
 
     updateStats();
 };
+// =====================================================
+// SHOP MENU LOGIC
+// =====================================================
+document.getElementById("openShopBtn").onclick = () => {
+    const menu = document.getElementById("shopMenu");
+    menu.style.display = menu.style.display === "block" ? "none" : "block";
 
+    const list = document.getElementById("shopList");
+    list.innerHTML = ""; // Limpa a lista
+
+    weapons.forEach((w, index) => {
+        const btn = document.createElement("button");
+        
+        // Formata o bônus para mostrar (ex: ATK+50, DEF+10)
+        let bonusText = `(ATK+${w.bonus.atk}, DEF+${w.bonus.def})`;
+        
+        // Texto principal do botão
+        btn.innerHTML = `${w.name} [${w.rarity}] <br>
+                         <span class="shop-item-details">
+                           Custo: ${w.cost.toLocaleString()} | ${bonusText}
+                         </span>`;
+        
+        // Verifica se o jogador já tem esta arma
+        if (player.weapon && player.weapon.name === w.name) {
+            btn.disabled = true;
+            btn.innerHTML += `<br><span class="shop-item-details">(Equipado)</span>`;
+        } 
+        // Verifica se o jogador pode pagar
+        else if (player.bounty < w.cost) {
+            btn.disabled = true;
+            btn.style.opacity = "0.5";
+        } 
+        // Se puder comprar
+        else {
+            btn.onclick = () => buyWeapon(index);
+        }
+        
+        list.appendChild(btn);
+    });
+};
+
+function buyWeapon(index) {
+    const weapon = weapons[index];
+
+    // Checagem dupla de segurança
+    if (player.bounty < weapon.cost) {
+        return log("❌ Você não tem Bounty o suficiente!");
+    }
+
+    player.bounty -= weapon.cost; // Subtrai o custo
+    player.weapon = weapon; // Equipa a arma
+
+    log(`⚔️ Você comprou e equipou a ${weapon.name}!`);
+
+    // Fecha o menu da loja e atualiza as stats
+    document.getElementById("shopMenu").style.display = "none";
+    updateStats();
+}
 // =====================================================
 // MISSION MENU OPEN
 // =====================================================
@@ -511,28 +651,52 @@ function loseBattle() {
 function addXP(amount) {
     player.xp += amount;
 
-    // (Opcional: Reduzir a curva de XP para facilitar o up)
-    // player.nextXP = Math.floor(player.nextXP * 1.5); // (Curva Padrão)
-    player.nextXP = Math.floor(player.nextXP + 50); // (Curva mais suave)
+    let levelsGained = 0;
+    let totalHpGained = 0;
+    let totalAtkGained = 0;
+    let totalDefGained = 0;
 
+    // --- Stats por nível ---
+    const hpGain = 30;
+    const atkGain = 8;
+    const defGain = 2;
+
+    // 1. Este loop agora roda em memória, sem chamar log(). É super rápido.
     while (player.xp >= player.nextXP) {
+        levelsGained++; // Conta o nível
+        
         player.xp -= player.nextXP;
         player.level++;
+        player.nextXP = Math.floor(player.nextXP * 1.3);
 
-        // --- A MUDANÇA ESTÁ AQUI ---
-        // Troca o ganho de EXPONENCIAL para ADITIVO (soma)
-        const hpGain = 30;  // +30 de HP base por nível
-        const atkGain = 8;  // +8  de ATK base por nível
-        const defGain = 2;  // +2  de DEF base por nível
+        // Soma os stats totais
+        totalHpGained += hpGain;
+        totalAtkGained += atkGain;
+        totalDefGained += defGain;
 
+        // Adiciona os stats ao jogador
         player.maxHP += hpGain;
         player.atk += atkGain;
         player.def += defGain;
-        // --- FIM DA MUDANÇA ---
+    }
 
-        player.hp = getPlayerTotalMaxHP(); // Cura o jogador
+    // 2. SÓ DEPOIS que o loop termina, mostramos o log UMA VEZ.
+    if (levelsGained > 0) {
+        
+        const rollsGained = levelsGained * 5; // 5 rolagens por nível
+        player.fruitRolls += rollsGained;
 
-        log(`⬆️ Você subiu para nível ${player.level}! (HP+${hpGain}, ATK+${atkGain}, DEF+${defGain})`);
+        if (levelsGained === 1) {
+            // Se foi só 1 nível, mostramos a mensagem normal
+            log(`⬆️ Você subiu para nível (HP+${hpGain}, ATK+${atkGain}, DEF+${defGain}, Rolagens+${rollsGained})`);
+        } else {
+            // Se foram vários níveis, mostramos um RESUMO
+            log(`✨ UAU! Você subiu ${levelsGained} níveis de uma vez!`);
+            log(`(HP+${totalHpGained}, ATK+${totalAtkGained}, DEF+${totalDefGained}, Rolagens+${rollsGained})`);
+        }
+
+        // Cura o jogador UMA VEZ
+        player.hp = getPlayerTotalMaxHP(); 
     }
 }
 
