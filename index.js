@@ -1,4 +1,4 @@
-alert("Update 1.9 - Nessa update, eu coloquei missões por sagas de east blue, grand line e até wano")
+alert("Update 2 - Nessa update, eu coloquei um menu de loja de armas adicionado ao jogo")
 
 // =====================================================
 // PLAYER DATA
