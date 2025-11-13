@@ -22,13 +22,13 @@ let currentEnemy = null;
 // FRUITS
 // =====================================================
 const fruits = [
-    { name: 'Bomu Bomu no Mi', rarity: 'Comum', chance: 60, special: 'Explosão', damage: 1.1 },
-    { name: 'Mera Mera no Mi', rarity: 'Rara', chance: 30, special: 'Chama Flamejante', damage: 2 },
-    { name: 'Goro Goro no Mi', rarity: 'Épica', chance: 15, special: 'Relâmpago Divino', damage: 5 },
-    { name: 'Gura Gura no Mi', rarity: 'Lendária', chance: 9, special: 'Abalo Sísmico', damage: 10 },
-    { name: 'Pika Pika no Mi', rarity: 'Lendária', chance: 9, special: 'Chute de luz', damage: 15 },
-    { name: 'Hito Hito no Mi', rarity: 'Mítica', chance: 1, special: 'Golpe da Liberdade', damage: 40 },
-    { name: 'Uo Uo no Mi', rarity: 'Mítica', chance: 1, special: 'Onigashima', damage: 25 }
+    { name: 'Bomu Bomu no Mi', image: 'frutas/Bomu_Bomu_no_Mi_Infobox.webp', rarity: 'Comum', chance: 60, special: 'Explosão', damage: 1.1 },
+    { name: 'Mera Mera no Mi', image: 'frutas/meramera.png', rarity: 'Rara', chance: 30, special: 'Chama Flamejante', damage: 2 },
+    { name: 'Goro Goro no Mi', image: 'frutas/Goro_Goro_no_Mi_Infobox.webp', rarity: 'Épica', chance: 15, special: 'Relâmpago Divino', damage: 5 },
+    { name: 'Gura Gura no Mi', image: 'frutas/guragura.jpg', rarity: 'Lendária', chance: 9, special: 'Abalo Sísmico', damage: 10 },
+    { name: 'Pika Pika no Mi', image: 'frutas/light.jpg', rarity: 'Lendária', chance: 9, special: 'Chute de luz', damage: 15 },
+    { name: 'Hito Hito no Mi', image: 'frutas/hitothito.jpg', rarity: 'Mítica', chance: 1, special: 'Golpe da Liberdade', damage: 40 },
+    { name: 'Uo Uo no Mi', image: 'frutas/uouo.jpg', rarity: 'Mítica', chance: 1, special: 'Onigashima', damage: 25 }
 ];
 
 // =====================================================
@@ -120,6 +120,10 @@ document.getElementById("rollFruitBtn").onclick = () => {
                 `${f.name} (${f.rarity}) | Especial: ${f.special}`;
 
             document.getElementById("inventory").innerText = f.name;
+
+            const imgElement = document.getElementById("fruitImage");
+            imgElement.src = f.image; // Define a imagem
+            imgElement.style.display = "block"; // Mostra a imagem
 
             log(`🍏 Você ganhou a fruta ${f.name}!`);
             document.getElementById("btnStart").disabled = false;
@@ -268,13 +272,13 @@ function winBattle() {
     // CASO 1: Ainda faltam inimigos
     if (currentEnemy.count > 0) {
         log(`⚔️ Um inimigo foi derrotado! Faltam ${currentEnemy.count}.`);
-        
+
         // "Cura" o inimigo para a próxima luta
-        currentEnemy.hp = currentEnemy.maxHP; 
-        
+        currentEnemy.hp = currentEnemy.maxHP;
+
         document.getElementById("enemyName").innerText = `${currentEnemy.name} (${currentEnemy.count})`; // Atualiza a contagem
         updateHPbars();
-        
+
         return; // Sai da função. AINDA NÃO DÁ A RECOMPENSA.
     }
 
@@ -291,7 +295,7 @@ function winBattle() {
     }
 
     // Limpa o inimigo
-    currentEnemy = null; 
+    currentEnemy = null;
 
     // Limpa a UI do inimigo
     document.getElementById("enemyName").innerText = "Inimigo";
@@ -377,7 +381,7 @@ document.getElementById("resetBtn").onclick = () => {
 document.getElementById("saveBtn").onclick = saveGame;
 
 // Tenta carregar o jogo assim que a página abre
-window.onload = loadGame; 
+window.onload = loadGame;
 
 function saveGame() {
     // Converte o objeto 'player' em um texto JSON e salva
@@ -393,21 +397,27 @@ function loadGame() {
     if (savedData) {
         // Converte o texto de volta para um objeto
         const loadedPlayer = JSON.parse(savedData);
-        
+
+        if (player.fruit && player.fruit.image) {
+            const imgElement = document.getElementById("fruitImage");
+            imgElement.src = player.fruit.image;
+            imgElement.style.display = "block";
+        }
+
         // Atualiza o 'player' principal com os dados salvos
         // Object.assign é uma forma segura de fundir os dois objetos
-        Object.assign(player, loadedPlayer); 
+        Object.assign(player, loadedPlayer);
 
         log("📂 Jogo carregado!");
-        
+
         // Atualiza a UI para mostrar os dados carregados
         document.getElementById("playerName").value = player.name;
-        document.getElementById("fruitResult").innerText = player.fruit ? 
+        document.getElementById("fruitResult").innerText = player.fruit ?
             `${player.fruit.name} (${player.fruit.rarity})` : "Nenhuma fruta girada";
-        
+
         // Mostra o jogo e atualiza status/inventário
         document.getElementById("gameArea").style.display = "block";
-        updateStats(); 
+        updateStats();
         document.getElementById("btnStart").disabled = true; // Desabilita o "Iniciar" pois o jogo já começou
     } else {
         log("🏴‍☠️ Novo jogo. Gire uma fruta e digite seu nome.");

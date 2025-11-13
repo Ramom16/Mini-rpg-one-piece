@@ -58,6 +58,16 @@ header h1 {
   gap: 12px;
   margin-top: 10px;
 }
+.fruit-image {
+  width: 100px;  /* Define um tamanho fixo */
+  height: 100px;
+  display: block;  /* Faz o 'margin: auto' funcionar */
+  margin: 10px auto; /* Centraliza a imagem */
+  object-fit: contain; /* Garante que a imagem caiba sem distorcer */
+  background: rgba(0,0,0,.1); /* Fundo sutil */
+  border-radius: 8px;
+  border: 1px solid var(--border);
+}
 
 .panel {
   background: var(--panel);
