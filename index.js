@@ -1,3 +1,5 @@
+alert("Update 1.8 - quanto maior o titulo, mais a chance da garantir uma fruta mitica ou lendaria e também foi estabilizado o ganho de level")
+
 // =====================================================
 // PLAYER DATA
 // =====================================================
