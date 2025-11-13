@@ -99,7 +99,7 @@ const fruits = [
     // --- 3 MÍTICAS (Total 3% de chance) ---
     { 
         name: 'Hito Hito no Mi, Model: Nika', 
-        image: 'frutas/hitohito.jpg', // (Você já tem)
+        image: 'frutas/modelonika.jpg', // (Você já tem)
         rarity: 'Mítica', 
         chance: 1, // (Chance mantida)
         special: 'Golpe da Liberdade', 
