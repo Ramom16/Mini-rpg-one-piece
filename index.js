@@ -133,52 +133,52 @@ const weapons = [
     { 
         name: 'Cutelo da Marinha', 
         rarity: 'Comum', 
-        cost: 500_000_000, // 500 Milhões
+        cost: 10_000_000, // 100 Milhões
         bonus: { atk: 50, def: 10 } 
     },
     { 
         name: 'Katana Simples', 
         rarity: 'Comum', 
-        cost: 750_000_000, // 750 Milhões
+        cost: 50_000_000, // 50 Milhões
         bonus: { atk: 80, def: 5 } 
     },
     // --- 2 ÉPICAS ---
     { 
         name: 'Nodachi (Lâmina Longa)', 
         rarity: 'Épica', 
-        cost: 5_000_000_000, // 5 Bilhões
+        cost: 75_000_000, // 75 Bilhões
         bonus: { atk: 300, def: 100 } 
     },
     { 
         name: 'Yubashiri (Lâmina Leve)', 
         rarity: 'Épica', 
-        cost: 8_000_000_000, // 8 Bilhões
+        cost: 100_000_000, // 100 Milhões
         bonus: { atk: 450, def: 50 } 
     },
     // --- 2 LENDÁRIAS ---
     { 
         name: 'Wado Ichimonji', 
         rarity: 'Lendária', 
-        cost: 25_000_000_000, // 25 Bilhões
+        cost: 200_000_000, // 200 Milhões
         bonus: { atk: 1000, def: 300 } 
     },
     { 
         name: 'Shusui (Lâmina Negra)', 
         rarity: 'Lendária', 
-        cost: 40_000_000_000, // 40 Bilhões
+        cost: 1_000_000_000, // 1 Bilhão
         bonus: { atk: 1500, def: 200 } 
     },
     // --- 2 MÍTICAS ---
     { 
         name: 'Gryphon (Espada do Shanks)', 
         rarity: 'Mítica', 
-        cost: 80_000_000_000, // 80 Bilhões
+        cost: 5_000_000_000, // 5 Bilhões
         bonus: { atk: 3000, def: 1000 } 
     },
     { 
         name: 'Yoru (Espada do Mihawk)', 
         rarity: 'Mítica', 
-        cost: 100_000_000_000, // 100 Bilhões
+        cost: 50_000_000_000, // 50 Bilhões
         bonus: { atk: 5000, def: 500 } 
     }
 ];
@@ -188,37 +188,38 @@ const weapons = [
 // =====================================================
 const missions = [
     // --- SEU EAST BLUE & ALABASTA (Intacto) ---
-    { levelMin: 1,    name: "Derrote 2 Marinheiros Novatos", quantity: 2, baseHP: 80, baseAtk: 8, baseDef: 3, reward: 10_000_000, xp: 700, hakiChance: 0.01 },
-    { levelMin: 10,   name: "Derrote 5 Marinheiros", quantity: 5, baseHP: 120, baseAtk: 12, baseDef: 5, reward: 25_000_000, xp: 1500, hakiChance: 0.03 },
-    { levelMin: 25,   name: "Derrote os piratas do Buggy", baseHP: 250, baseAtk: 16, baseDef: 8, reward: 100_000_000, xp: 3500, hakiChance: 0.05 },
-    { levelMin: 40,   name: "Derrote o Buggy", quantity: 3, baseHP: 500, baseAtk: 20, baseDef: 10, reward: 250_000_000, xp: 5000, hakiChance: 0.08 },
-    { levelMin: 60,   name: "Derrote o Don Krieg", baseHP: 1000, baseAtk: 26, baseDef: 13, reward: 1_000_000_000, xp: 8000, hakiChance: 0.15 },
-    { levelMin: 80,   name: "Derrote os piratas de Arlong", quantity: 2, baseHP: 1000, baseAtk: 40, baseDef: 20, reward: 1_800_000_000, xp: 12000, hakiChance: 0.30 },
-    { levelMin: 100,  name: "Derrote o Wapol", baseHP: 1000, baseAtk: 60, baseDef: 35, reward: 3_000_000_000, xp: 20000, hakiChance: 0.50 },
-    { levelMin: 120,  name: "Derrote o Mr 3", baseHP: 2000, baseAtk: 90, baseDef: 50, reward: 5_000_000_000, xp: 35000, hakiChance: 0.70 },
-    { levelMin: 150,  name: "Derrote Mr 5 & Miss Valentine", quantity: 2, baseHP: 1000, baseAtk: 120, baseDef: 80, reward: 10_000_000_000, xp: 50000, hakiChance: 1 },
-    { levelMin: 200,  name: "Derrote Bellamy", baseHP: 2000, baseAtk: 160, baseDef: 100, reward: 20_000_000_000, xp: 80000, hakiChance: 1.5 },
-    { levelMin: 250,  name: "Derrote o Crocodile", baseHP: 10000, baseAtk: 400, baseDef:100, reward: 30_000_000_000, xp:100000, hakiChance:10},
+    { levelMin: 1,    name: "Derrote 2 Marinheiros Novatos", quantity: 2, baseHP: 80, baseAtk: 8, baseDef: 3, reward: 1_000_000, xp: 700, hakiChance: 0.01 },
+    { levelMin: 10,   name: "Derrote 5 Marinheiros", quantity: 5, baseHP: 120, baseAtk: 12, baseDef: 5, reward: 2_000_000, xp: 1500, hakiChance: 0.03 },
+    { levelMin: 25,   name: "Derrote os piratas do Buggy", quantity: 5, baseHP: 250, baseAtk: 16, baseDef: 8, reward: 10_000_000, xp: 3500, hakiChance: 0.05 },
+    { levelMin: 40,   name: "Derrote o Buggy", baseHP: 500, baseAtk: 20, baseDef: 10, reward: 25_000_000, xp: 5000, hakiChance: 0.08 },
+    { levelMin: 60,   name: "Derrote o Don Krieg", baseHP: 1000, baseAtk: 26, baseDef: 13, reward: 100_000_000, xp: 8000, hakiChance: 0.15 },
+    { levelMin: 80,   name: "Derrote os piratas de Arlong", quantity: 2, baseHP: 1000, baseAtk: 40, baseDef: 20, reward: 180_000_000, xp: 12000, hakiChance: 0.30 },
+    { levelMin: 100,  name: "Derrote o Wapol", baseHP: 5000, baseAtk: 60, baseDef: 35, reward: 300_000_000, xp: 20000, hakiChance: 0.50 },
+    { levelMin: 120,  name: "Derrote o Mr 3", baseHP: 6000, baseAtk: 90, baseDef: 50, reward: 500_000_000, xp: 35000, hakiChance: 0.70 },
+    { levelMin: 150,  name: "Derrote Mr 5 & Miss Valentine", quantity: 2, baseHP: 6000, baseAtk: 120, baseDef: 80, reward: 1_000_000_000, xp: 50000, hakiChance: 1 },
+    { levelMin: 200,  name: "Derrote Bellamy", baseHP: 7500, baseAtk: 160, baseDef: 100, reward: 2_000_000_000, xp: 80000, hakiChance: 1.5 },
+    { levelMin: 250,  name: "Derrote o Crocodile", baseHP: 10000, baseAtk: 400, baseDef:100, reward: 3_000_000_000, xp:100000, hakiChance:10},
     
     // --- NOVO: SAGA SKYPIEA & ENIES LOBBY ---
     // (Preenchendo o buraco 250 -> 500)
-    { levelMin: 300,  name: "Derrote Enel", baseHP: 12000, baseAtk: 500, baseDef: 150, reward: 32_000_000_000, xp: 150000, hakiChance: 12 },
-    { levelMin: 350,  name: "Derrote Rob Lucci", baseHP: 20000, baseAtk: 650, baseDef: 250, reward: 35_000_000_000, xp: 250000, hakiChance: 15 },
+    { levelMin: 300,  name: "Derrote Enel", baseHP: 12000, baseAtk: 500, baseDef: 150, reward: 4_000_000_000, xp: 150000, hakiChance: 12 },
+    { levelMin: 350,  name: "Derrote Rob Lucci", baseHP: 20000, baseAtk: 650, baseDef: 250, reward: 5_000_000_000, xp: 250000, hakiChance: 15 },
     
     // --- NOVO: SAGA THRILLER BARK & NOVO MUNDO ---
-    { levelMin: 400,  name: "Derrote Oars e Moriah", quantity: 2, baseHP: 15000, baseAtk: 700, baseDef: 200, reward: 40_000_000_000, xp: 300000, hakiChance: 16 },
-    { levelMin: 450,  name: "Derrote 5 Pacifistas", quantity: 5, baseHP: 5000, baseAtk: 800, baseDef: 400, reward: 44_000_000_000, xp: 350000, hakiChance: 17 },
-    { levelMin: 500,  name: "Derrote Hody Jones", baseHP: 25000, baseAtk: 850, baseDef: 350, reward: 46_000_000_000, xp: 420000, hakiChance: 19 },
+    { levelMin: 400,  name: "Derrote Oars e Moriah", quantity: 2, baseHP: 15000, baseAtk: 700, baseDef: 200, reward: 7_000_000_000, xp: 300000, hakiChance: 16 },
+    { levelMin: 500,  name: "Derrote 5 Pacifistas", quantity: 5, baseHP: 10000, baseAtk: 800, baseDef: 400, reward: 10_000_000_000, xp: 350000, hakiChance: 17 },
+    { levelMin: 600,  name: "Derrote Hody Jones", baseHP: 25000, baseAtk: 850, baseDef: 350, reward: 15_000_000_000, xp: 420000, hakiChance: 19 },
     
     // --- NOVO: SAGA DRESSROSA & WHOLE CAKE ---
-    { levelMin: 550,  name: "Derrote Doflamingo", baseHP: 40000, baseAtk: 950, baseDef: 450, reward: 49_000_000_000, xp: 490000, hakiChance: 20 },
-    { levelMin: 600,  name: "Derrote o Exército de Elbaf", quantity: 10, baseHP: 50000, baseAtk: 1000, baseDef:500, reward: 50_000_000_000, xp: 500000, hakiChance: 20}, // Sua missão, movida para um nível lógico
-    { levelMin: 700,  name: "Derrote Cracker", quantity: 10, baseHP: 8000, baseAtk: 1200, baseDef: 600, reward: 60_000_000_000, xp: 700000, hakiChance: 22 },
-    { levelMin: 800,  name: "Derrote Katakuri", baseHP: 75000, baseAtk: 1500, baseDef: 700, reward: 80_000_000_000, xp: 1000000, hakiChance: 25 },
+    { levelMin: 700,  name: "Derrote Doflamingo", baseHP: 40000, baseAtk: 950, baseDef: 450, reward: 20_000_000_000, xp: 490000, hakiChance: 20 },
+    { levelMin: 900,  name: "Derrote o Exército de Elbaf", quantity: 10, baseHP: 50000, baseAtk: 1000, baseDef:500, reward: 30_000_000_000, xp: 500000, hakiChance: 20}, // Sua missão, movida para um nível lógico
+    { levelMin: 1000,  name: "Derrote Cracker", quantity: 1, baseHP: 80000, baseAtk: 1200, baseDef: 600, reward: 60_000_000_000, xp: 700000, hakiChance: 22 },
+    { levelMin: 1100,  name: "Derrote Katakuri", baseHP: 100000, baseAtk: 1500, baseDef: 700, reward: 80_000_000_000, xp: 1000000, hakiChance: 25 },
+    { levelMin: 1500, name: "Derrote a Big Mom", baseHP: 250000, baseAtk: 3000, baseDef: 1000, reward: 100_000_000_000, xp: 2000000, hakiChance: 50},
 
     // --- NOVO: SAGA WANO ---
-    { levelMin: 900,  name: "Derrote Urashima e Holdem", quantity: 2, baseHP: 50000, baseAtk: 1600, baseDef: 750, reward: 90_000_000_000, xp: 1200000, hakiChance: 28 },
-    { levelMin: 1000, name: "Derrote Kaido", baseHP: 200000, baseAtk: 2500, baseDef: 1000, reward: 150_000_000_000, xp: 2000000, hakiChance: 35 },
+    { levelMin: 1700,  name: "Derrote Urashima e Holdem", quantity: 2, baseHP: 100000, baseAtk: 1600, baseDef: 750, reward: 90_000_000_000, xp: 1200000, hakiChance: 28 },
+    { levelMin: 2000, name: "Derrote Kaido", baseHP: 500000, baseAtk: 5500, baseDef: 1000, reward: 150_000_000_000, xp: 5000000, hakiChance: 35 },
 ];
 // =====================================================
 // LOG
