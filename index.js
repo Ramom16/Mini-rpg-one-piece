@@ -572,12 +572,19 @@ document.getElementById("defendBtn").onclick = () => {
 };
 
 function enemyTurn() {
-    let dmg = Math.max(1, currentEnemy.atk - getPlayerTotalDef());
+    // 1. Calcula o dano "cru" (sem mínimo)
+    let rawDmg = getPlayerTotalDef() - currentEnemy.atk;
 
-    if (player.haki) dmg *= 0.7;
+    // 2. Aplica a redução do Haki PRIMEIRO
+    if (player.haki) {
+        rawDmg *= 0.7; // Reduz o dano em 30%
+    }
+
+    // 3. AGORA, garante que o dano final seja no mínimo 1
+    //    E arredonda o dano para um número inteiro.
+    let dmg = Math.floor(Math.max(1, rawDmg));
 
     player.hp -= dmg;
-
     log(`💥 O inimigo causou ${dmg} de dano!`);
 
     if (player.hp <= 0) loseBattle();
@@ -709,37 +716,37 @@ const titles = [
     { 
         limit: 5_000_000_000, 
         title: 'Rei dos Piratas', 
-        bonus: { hp: 1000, atk: 250, def: 100, xp: 1.00, rollBonus: { legendary: 15, mythic: 8 } } 
+        bonus: { hp: 1000, atk: 250, def: 100, xp: 3.00, rollBonus: { legendary: 15, mythic: 8 } } 
     },
     { 
         limit: 3_000_000_000, 
         title: 'Yonkou', 
-        bonus: { hp: 500, atk: 150, def: 75, xp: 0.75, rollBonus: { legendary: 10, mythic: 5 } } 
+        bonus: { hp: 500, atk: 150, def: 75, xp: 2, rollBonus: { legendary: 10, mythic: 5 } } 
     },
     { 
         limit: 2_000_000_000, 
         title: 'Comandante de Yonkou', 
-        bonus: { hp: 300, atk: 100, def: 50, xp: 0.5, rollBonus: { legendary: 5, mythic: 2 } } 
+        bonus: { hp: 300, atk: 100, def: 50, xp: 1.5, rollBonus: { legendary: 5, mythic: 2 } } 
     },
     { 
         limit: 1_000_000_000, 
         title: 'Shichibukai', 
-        bonus: { hp: 200, atk: 70, def: 35, xp: 0.35, rollBonus: { legendary: 2, mythic: 1 } } 
+        bonus: { hp: 200, atk: 70, def: 35, xp: 1, rollBonus: { legendary: 2, mythic: 1 } } 
     },
     { 
         limit: 300_000_000, 
         title: 'Supernova', 
-        bonus: { hp: 100, atk: 40, def: 20, xp: 0.20, rollBonus: { legendary: 1, mythic: 0 } } 
+        bonus: { hp: 100, atk: 40, def: 20, xp: 0.75, rollBonus: { legendary: 1, mythic: 0 } } 
     },
     { 
         limit: 100_000_000, 
         title: 'Pirata', 
-        bonus: { hp: 50, atk: 15, def: 5, xp: 0.10, rollBonus: { legendary: 0, mythic: 0 } } // Sem bônus
+        bonus: { hp: 50, atk: 15, def: 5, xp: 0.5, rollBonus: { legendary: 0, mythic: 0 } } // Sem bônus
     },
     { 
         limit: 0, 
         title: 'Marujo', 
-        bonus: { hp: 0, atk: 0, def: 0, xp: 0.05, rollBonus: { legendary: 0, mythic: 0 } } // Sem bônus
+        bonus: { hp: 0, atk: 0, def: 0, xp: 0.00, rollBonus: { legendary: 0, mythic: 0 } } // Sem bônus
     }
 ];
 
