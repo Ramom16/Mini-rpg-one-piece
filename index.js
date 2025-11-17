@@ -1,4 +1,5 @@
 alert("Update 2 - Nessa update, eu coloquei um menu de loja de armas adicionado ao jogo")
+let specialOnCooldown = false;
 
 // =====================================================
 // PLAYER DATA
@@ -540,6 +541,10 @@ document.getElementById("attackBtn").onclick = () => {
 };
 
 document.getElementById("specialBtn").onclick = () => {
+    if (specialOnCooldown) {
+        log("❌ Especial está recarregando, aguarde!");
+        return;
+    }
     if (!currentEnemy) return;
 
     // --- MUDANÇA NA LÓGICA DO DANO ---
