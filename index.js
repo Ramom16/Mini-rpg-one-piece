@@ -731,22 +731,22 @@ const titles = [
     { 
         limit: 1_000_000_000, 
         title: 'Shichibukai', 
-        bonus: { hp: 200, atk: 70, def: 35, xp: 1, rollBonus: { legendary: 2, mythic: 1 } } 
+        bonus: { hp: 200, atk: 70, def: 35, xp: 1.4, rollBonus: { legendary: 2, mythic: 1 } } 
     },
     { 
         limit: 300_000_000, 
         title: 'Supernova', 
-        bonus: { hp: 100, atk: 40, def: 20, xp: 0.75, rollBonus: { legendary: 1, mythic: 0 } } 
+        bonus: { hp: 100, atk: 40, def: 20, xp: 1.3, rollBonus: { legendary: 1, mythic: 0 } } 
     },
     { 
         limit: 100_000_000, 
         title: 'Pirata', 
-        bonus: { hp: 50, atk: 15, def: 5, xp: 0.5, rollBonus: { legendary: 0, mythic: 0 } } // Sem bônus
+        bonus: { hp: 50, atk: 15, def: 5, xp: 1.2, rollBonus: { legendary: 0, mythic: 0 } } // Sem bônus
     },
     { 
         limit: 0, 
         title: 'Marujo', 
-        bonus: { hp: 0, atk: 0, def: 0, xp: 0.00, rollBonus: { legendary: 0, mythic: 0 } } // Sem bônus
+        bonus: { hp: 0, atk: 0, def: 0, xp: 1.1, rollBonus: { legendary: 0, mythic: 0 } } // Sem bônus
     }
 ];
 
