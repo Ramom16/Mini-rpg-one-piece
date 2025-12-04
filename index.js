@@ -221,6 +221,7 @@ const missions = [
     // --- NOVO: SAGA WANO ---
     { levelMin: 1700,  name: "Derrote Urashima e Holdem", quantity: 2, baseHP: 100000, baseAtk: 1600, baseDef: 750, reward: 90_000_000_000, xp: 1200000, hakiChance: 28 },
     { levelMin: 2000, name: "Derrote Kaido", baseHP: 500000, baseAtk: 5500, baseDef: 1000, reward: 150_000_000_000, xp: 5000000, hakiChance: 35 },
+    { levelMin: 3000, name: "Derrote o Kaido despertado", baseHP: 1000000, baseAtk: 10000, baseDef: 2000, reward:150_000_000_000, xp: 50000000, hakiChance: 50 }
 ];
 // =====================================================
 // LOG
